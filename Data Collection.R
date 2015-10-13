@@ -20,6 +20,7 @@ individual_swims<-function(LCM, SCM, SCY, top){
 	time_type<-remDr$findElement(using = "id", value = "ctl82_rbIndividual")
 	time_type$clickElement() #Make Sure Indivual Times are Selected
 
+	# Figuring Out How To Select Conference
 	if(Conference == "Big Ten"){
 		conference_select<-list("B", "B", "B")
 	} else {
@@ -29,12 +30,13 @@ individual_swims<-function(LCM, SCM, SCY, top){
 		warning("Conference Not Found.  Please Use One Of The Following:")
 		print(conference_list)
 	  }
-	}
+	} # WILL OVERHAUL THIS TO ITERATIVELY PULL EACH CONFERENCE!
 
 	conference<-remDr$findElement(using = "id", value = "ctl82_ddConference")
 	conference$sendKeysToElement(conference_select)
 
 	# Select The Courses
+	# NEED TO MODIFY THIS IF PLACED IN LOOP SO THAT THEY DON'T GET TURNED BACK ON
 	if(LCM == FALSE){
 		lcm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_0")
 		lcm$clickElement()
@@ -61,6 +63,11 @@ individual_swims<-function(LCM, SCM, SCY, top){
 	show_top$sendKeysToElement(list(as.character(top)))
 
 	# Turn Off Altitude Adjustment
+	#if(){
+	#	altitude<-remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")
+	#	altitude$clickElement()
+	#} This Will Be USED WHEN I CREATE LOOP TO PULL ALL CONFERENCES
+
 	altitude<-remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")
 	altitude$clickElement()
 
@@ -72,12 +79,31 @@ individual_swims<-function(LCM, SCM, SCY, top){
 	output_select$sendKeysToElement(list("E", "E", "E"))
 	change_output<-remDr$findElement(using = "id", value = "ctl82_ucReportViewer_lbChangeOutputType" )
 	
-	Sys.sleep(10) # Need to pause to get the export click to work
+	Sys.sleep(5) # Need to pause to get the export click to work
 
 	change_output$clickElement()
 
-	Sys.sleep(10)
+	Sys.sleep(15) # Give Time for Down Load
+
+
+	# File Management
+	file<-list.files(path = "/Users/SeanWarlick/Downloads", pattern = "*.csv")
+
+	file.rename(file, paste(Conference, ".csv", sep ="")) #Give Meaningful Name
+
+	file_rename<-list.files(path = "/Users/SeanWarlick/Downloads", pattern = "*.csv") # Store New Name For Ease
+
+	file.copy(from = paste("/Users/SeanWarlick/Downloads/", file_rename, sep = ""), to = "/Users/SeanWarlick/Documents/GitHub/swimming_app/data") # Copy File to Data Location
+
+	file.remove(paste("/Users/SeanWarlick/Downloads/", file_rename, sep = "")) # Remove File From Download. 
+
+	# IF I PUT THIS IN A LOOP THIS WILL BE THE END OF THE LOOP
 
 	remDr$close()
 
+	#Combine To One File
+	setwd("")
+	list.files()
+
 }
+
