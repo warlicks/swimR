@@ -1,8 +1,15 @@
+# Author: Sean Warlick
+# Date: October 12, 2015
+# Source Code For Functions to Pull Individual and Relay Data for NCAA Swimming
+# from USA Swimming's Website. 
+###############################################################################
+
 url<-"http://usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en"
 
 individual_swims<-function(LCM, SCM, SCY, top){
-	require(RSelenium)
-	startServer()
+	require(RSelenium) # Rselenium Provides Tools Fill Out Search Form. 
+	
+	startServer() # Star Selenium Server
 
 	remDr<-remoteDriver(browser = "firefox")
 
@@ -12,6 +19,20 @@ individual_swims<-function(LCM, SCM, SCY, top){
 
 	time_type<-remDr$findElement(using = "id", value = "ctl82_rbIndividual")
 	time_type$clickElement() #Make Sure Indivual Times are Selected
+
+	if(Conference == "Big Ten"){
+		conference_select<-list("B", "B", "B")
+	} else {
+	  if(Conference == "PAC 12"){
+	  	conference_select<-list("P")
+	  } else {
+		warning("Conference Not Found.  Please Use One Of The Following:")
+		print(conference_list)
+	  }
+	}
+
+	conference<-remDr$findElement(using = "id", value = "ctl82_ddConference")
+	conference$sendKeysToElement(conference_select)
 
 	# Select The Courses
 	if(LCM == FALSE){
@@ -39,6 +60,7 @@ individual_swims<-function(LCM, SCM, SCY, top){
 	show_top$clearElement()
 	show_top$sendKeysToElement(list(as.character(top)))
 
+	# Turn Off Altitude Adjustment
 	altitude<-remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")
 	altitude$clickElement()
 
@@ -50,7 +72,7 @@ individual_swims<-function(LCM, SCM, SCY, top){
 	output_select$sendKeysToElement(list("E", "E", "E"))
 	change_output<-remDr$findElement(using = "id", value = "ctl82_ucReportViewer_lbChangeOutputType" )
 	
-	Sys.sleep(10)
+	Sys.sleep(10) # Need to pause to get the export click to work
 
 	change_output$clickElement()
 
