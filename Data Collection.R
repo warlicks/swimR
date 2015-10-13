@@ -4,7 +4,7 @@ individual_swims<-function(LCM, SCM, SCY, top){
 	require(RSelenium)
 	startServer()
 
-	remDr<-remoteDriver(browserName = "firefox")
+	remDr<-remoteDriver(browser = "firefox")
 
 	remDr$open(silent = TRUE)
 
@@ -45,9 +45,17 @@ individual_swims<-function(LCM, SCM, SCY, top){
 	search<-remDr$findElement(using = "id", value ="ctl82_btnCreateReport")
 	search$clickElement()
 
-	#Change The Output To CSV & Save!
+	# Change The Output To CSV & Save!
 	output_select<-remDr$findElement(using = "id", value = "ctl82_ucReportViewer_ddViewerType")
 	output_select$sendKeysToElement(list("E", "E", "E"))
 	change_output<-remDr$findElement(using = "id", value = "ctl82_ucReportViewer_lbChangeOutputType" )
+	
+	Sys.sleep(10)
+
 	change_output$clickElement()
+
+	Sys.sleep(10)
+
+	remDr$close()
+
 }
