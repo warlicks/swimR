@@ -10,7 +10,7 @@
 
 ## Next Steps
 
-1 ~~Need to better document existing code in "Data Collection.R"~~ 
+1 ~~Need to better document existing code in "Data Collection.R"~~  
 2 ~~Explore Using *Formated HTML* output in combination with **rvest** to eliminate need to save the file from firefox.~~   
   + This will not work due to how USA Swimming displays the report.  
 
