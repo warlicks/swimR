@@ -3,11 +3,12 @@
 # Date Written: 10/15/2015
 ###############################################################################
 
-# Library Load ----
-
+# Library Load
+###############################################################################
 library(dplyr)
 library(data.table)
 library(magrittr)
+library(chron)
 
 
 # Set Working Directory
@@ -20,12 +21,24 @@ file.append("Master.csv", "PAC 12.csv") # This will later be moved to web scrapi
 
 master_times<-fread("Master.csv", sep = ",")
 
+
+
 # Data Cleaning
 ###############################################################################
+
 master_times<- master_times %>%
 	select(swim_date, team_short_name, team_code, gender, birth_date, full_name_computed, full_desc, event_id, swim_time, standard_name) %>%
-	arrange(team_code, event_id, swim_time, full_name_computed, swim_date) #%>%
-	#mutate(swim_date2 = as.Date(swim_date, format = "m%/d%/Y%")) 
+	# Select Only Needed Columns
+	arrange(team_code, event_id, swim_time, full_name_computed, swim_date) 
+	# Neatly Arrange Data Set.
+ 
+ # Need to conver swim times to time objects. Lubridate package not working try chron package and function times()
+
+## For each team rank swimmers in each event. 
+master_times<- master_times %>% 
+	group_by(team_code, gender, event_id)  %>%
+	mutate(team_event_rank = rank(swim_time))
+
 
 
 # Process
