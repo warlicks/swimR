@@ -6,7 +6,10 @@
 
 1 "Data Collection.R"
   + Automation of code fills out web form to gather data.
-  + Handles renaming and moving downloaded files to appropriate directory. 
+  + Handles renaming and moving downloaded files to appropriate directory.  
+2 "MeetLineUP.R"  
+  + General Clean Up of Data.  
+  + Team Rank in Each Event
 
 ## Next Steps
 
@@ -16,7 +19,8 @@
 
 3 Begin working on meet line up algorithum.  
   + Next Step is to create rank a swimmers best events.  
-  + Need to convert swim time from character variable.  
+    + Will Rank Swimmer's events based on "B Cut".  Creating Cut Time Dataset.
+  + ~~Need to convert swim time from character variable.~~  
 
 4 Modify Script to iterativly pull data from each conference.  
   + Will need to create a conference list and put portion of function in a `for()` loop.  
