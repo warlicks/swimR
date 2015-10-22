@@ -1,0 +1,745 @@
+conference$extraCapabilities[2]
+str(conference$extraCapabilities)
+conference$elementId
+conference$describeElement()
+conference$clickElement()
+conference$submitElement()
+conference$getElementAttribute("class name")
+conference$getElementAttribute("tag name")
+conference$getElementAttribute("css selector")
+conference$ELEMENT
+conference<-remDr$findElements(using = "id", value = "ctl82_ddConference")
+conference<-remDr$findElements(using = "css selector", value = "select#ctl82_ddConference")
+length(conference)
+conference$findChildElements
+conference$findChildElements()
+conference
+conference<-remDr$findElement(using = id, value = "ctl82_ddConference")
+conference<-remDr$findElement(using = "id", value = "ctl82_ddConference")
+conference$highlightElement()
+conference$getElementAttribute("type")
+t<-remDr$findElements(using = "tag name", value = "option")
+length(t)
+t
+lapply(t, function(x){x$getElementAttribute("name")})
+lapply(t, function(x){x$getElementAttribute("link text")})
+lapply(t, function(x){x$getElementAttribute("id")})
+lapply(t, function(x){x$getElementAttribute("tag name")})
+lapply(t, function(x){x$getElementAttribute("class")})
+lapply(t, function(x){x$getElementAttribute("value")})
+conference$findChildElement(using= "tag name", value = "option")
+l<-conference$findChildElement(using= "tag name", value = "option")
+length(l)
+time_type<-remDr$findElement(using = "id", "ctl82_rbIndividual")
+time_type<-remDr$findElement(using = "id", value = "ctl82_rbIndividual")
+time_type$highlightElement()
+time_type$clickElement()
+LCM<- FALSE
+if(LCM == FALSE){#
+        lcm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_0")#
+        lcm$clickElement()#
+    }
+SCM<-FALSE
+if(SCM == FALSE){#
+        lcm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_1")#
+        lcm$clickElement()  #
+    }
+SCY<- TRUE
+if(SCY == FALSE){#
+        scy<-remDr$findElement(using = "id", value = "ctl82_cblCourses_2")#
+        scy$clickElement()  #
+    }
+show_top<-remDr$findElement(using = "id", value = "ctl82_txtShowTopX")
+show_top$highlightElement()
+top<- "100"
+top
+top<- "300"
+top<- 300
+as.character(top)
+show_top$clearElement()
+show_top$sendKeysToElement(list(top))
+show_top$sendKeysToElement(list(as.character(top)))
+top<- 1000
+if(top > 500){#
+        warning("Can Not Excede Top 500 Times")#
+        stop()#
+    }
+?stop
+url<-"http://usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en"#
+LCM<- FALSE#
+SCM<- FALSE#
+SCY<- TRUE#
+top<- 1000#
+#
+individual_swims<-function(url, LCM, SCM, SCY, top){#
+    require(RSelenium)#
+    startServer()#
+#
+    remDr<-remoteDriver(browserName = "firefox")#
+#
+    remDr$open(silent = TRUE)#
+#
+    remDr$navigate(url)#
+#
+    time_type<-remDr$findElement(using = "id", value = "ctl82_rbIndividual")#
+    time_type$clickElement() #Make Sure Indivual Times are Selected#
+#
+    # Select The Courses#
+    if(LCM == FALSE){#
+        lcm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_0")#
+        lcm$clickElement()#
+    } # Uncheck LCM Button#
+#
+    if(SCM == FALSE){#
+        scm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_1")#
+        scm$clickElement()  #
+    } # Uncheck SCM Button#
+#
+    if(SCY == FALSE){#
+        scy<-remDr$findElement(using = "id", value = "ctl82_cblCourses_2")#
+        scy$clickElement()  #
+    } # Uncheck SCY Button#
+#
+    if(top > 500){#
+        warning("Can Not Excede Top 500 Times")#
+        stop()#
+    }#
+    show_top<-remDr$findElement(using = "id", value = "ctl82_txtShowTopX")#
+    show_top$clearElement()#
+    show_top$sendKeysToElement(list(as.character(top)))#
+#
+}
+individual_swims(url, LCM, SCM, SCY, top)
+individual_swims(url, FALSE, TRUE, TRUE, 100)
+individual_swims(url, FALSE, TRUE, TRUE, 50)
+altitude<-remDr$findElement(using = id, value = "ctl82_cbUseAltitudeAdjTime")
+id
+altitude$clickElement()
+altitude<-remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")
+remDr$open(silent = TRUE)#
+#
+    remDr$navigate(url)#
+#
+    time_type<-remDr$findElement(using = "id", value = "ctl82_rbIndividual")#
+    time_type$clickElement() #Make Sure Indivual Times are Selected#
+#
+    # Select The Courses#
+    if(LCM == FALSE){#
+        lcm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_0")#
+        lcm$clickElement()#
+    } # Uncheck LCM Button#
+#
+    if(SCM == FALSE){#
+        scm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_1")#
+        scm$clickElement()  #
+    } # Uncheck SCM Button#
+#
+    if(SCY == FALSE){#
+        scy<-remDr$findElement(using = "id", value = "ctl82_cblCourses_2")#
+        scy$clickElement()  #
+    } # Uncheck SCY Button#
+#
+    # Select How Many Times To Display#
+    if(top > 500){#
+        warning("Can Not Excede Top 500 Times")#
+        stop()#
+    } # Create Warning and Stop Execution if we excede USA Swimmings Max Value#
+#
+    show_top<-remDr$findElement(using = "id", value = "ctl82_txtShowTopX")#
+    show_top$clearElement()#
+    show_top$sendKeysToElement(list(as.character(top)))#
+#
+    altitude<-remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")#
+    altitude$clickElement()
+search<-remDr$findElement(using = "id", value ="ctl82_ulCreateReporte")
+search<-remDr$findElement(using = "id", value ="ctl82_ulCreateReport")
+search$highlightElement()
+search$clickElement()
+remDr$open(silent = TRUE)#
+#
+    remDr$navigate(url)#
+#
+    time_type<-remDr$findElement(using = "id", value = "ctl82_rbIndividual")#
+    time_type$clickElement() #Make Sure Indivual Times are Selected#
+#
+    # Select The Courses#
+    if(LCM == FALSE){#
+        lcm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_0")#
+        lcm$clickElement()#
+    } # Uncheck LCM Button#
+#
+    if(SCM == FALSE){#
+        scm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_1")#
+        scm$clickElement()  #
+    } # Uncheck SCM Button#
+#
+    if(SCY == FALSE){#
+        scy<-remDr$findElement(using = "id", value = "ctl82_cblCourses_2")#
+        scy$clickElement()  #
+    } # Uncheck SCY Button#
+#
+    # Select How Many Times To Display#
+    if(top > 500){#
+        warning("Can Not Excede Top 500 Times")#
+        stop()#
+    } # Create Warning and Stop Execution if we excede USA Swimmings Max Value#
+#
+    show_top<-remDr$findElement(using = "id", value = "ctl82_txtShowTopX")#
+    show_top$clearElement()#
+    show_top$sendKeysToElement(list(as.character(top)))#
+#
+    altitude<-remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")#
+    altitude$clickElement()#
+#
+    search<-remDr$findElement(using = "id", value ="ctl82_ulCreateReport")#
+    search$clickElement()
+remDr$open(silent = TRUE)#
+#
+    remDr$navigate(url)#
+#
+    time_type<-remDr$findElement(using = "id", value = "ctl82_rbIndividual")#
+    time_type$clickElement() #Make Sure Indivual Times are Selected#
+#
+    # Select The Courses#
+    if(LCM == FALSE){#
+        lcm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_0")#
+        lcm$clickElement()#
+    } # Uncheck LCM Button#
+#
+    if(SCM == FALSE){#
+        scm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_1")#
+        scm$clickElement()  #
+    } # Uncheck SCM Button#
+#
+    if(SCY == FALSE){#
+        scy<-remDr$findElement(using = "id", value = "ctl82_cblCourses_2")#
+        scy$clickElement()  #
+    } # Uncheck SCY Button#
+#
+    # Select How Many Times To Display#
+    if(top > 500){#
+        warning("Can Not Excede Top 500 Times")#
+        stop()#
+    } # Create Warning and Stop Execution if we excede USA Swimmings Max Value#
+#
+    show_top<-remDr$findElement(using = "id", value = "ctl82_txtShowTopX")#
+    show_top$clearElement()#
+    show_top$sendKeysToElement(list(as.character(top)))#
+#
+    altitude<-remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")#
+    altitude$clickElement()#
+#
+    search<-remDr$findElement(using = "id", value ="ctl82_ulCreateReport")#
+    search$isElementEnabled()
+search$submitElement()
+remDr$open(silent = TRUE)#
+#
+    remDr$navigate(url)#
+#
+    time_type<-remDr$findElement(using = "id", value = "ctl82_rbIndividual")#
+    time_type$clickElement() #Make Sure Indivual Times are Selected#
+#
+    # Select The Courses#
+    if(LCM == FALSE){#
+        lcm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_0")#
+        lcm$clickElement()#
+    } # Uncheck LCM Button#
+#
+    if(SCM == FALSE){#
+        scm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_1")#
+        scm$clickElement()  #
+    } # Uncheck SCM Button#
+#
+    if(SCY == FALSE){#
+        scy<-remDr$findElement(using = "id", value = "ctl82_cblCourses_2")#
+        scy$clickElement()  #
+    } # Uncheck SCY Button#
+#
+    # Select How Many Times To Display#
+    if(top > 500){#
+        warning("Can Not Excede Top 500 Times")#
+        stop()#
+    } # Create Warning and Stop Execution if we excede USA Swimmings Max Value#
+#
+    show_top<-remDr$findElement(using = "id", value = "ctl82_txtShowTopX")#
+    show_top$clearElement()#
+    show_top$sendKeysToElement(list(as.character(top)))#
+#
+    altitude<-remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")#
+    altitude$clickElement()#
+#
+    search<-remDr$findElement(using = "id", value ="ctl82_btnCreateReport")#
+    search$clickElement()
+output_select<-remDr$findElement(using = "id", value = "ctl82_ucReportViewer_ddViewerType")
+output_select$highlightElement()
+output_select$sendKeysToElement(list("E", "E", "E"))
+remDr<-remoteDriver(browserName = "firefox")#
+#
+    remDr$open(silent = TRUE)#
+#
+    remDr$navigate(url)#
+#
+    time_type<-remDr$findElement(using = "id", value = "ctl82_rbIndividual")#
+    time_type$clickElement() #Make Sure Indivual Times are Selected#
+#
+    # Select The Courses#
+    if(LCM == FALSE){#
+        lcm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_0")#
+        lcm$clickElement()#
+    } # Uncheck LCM Button#
+#
+    if(SCM == FALSE){#
+        scm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_1")#
+        scm$clickElement()  #
+    } # Uncheck SCM Button#
+#
+    if(SCY == FALSE){#
+        scy<-remDr$findElement(using = "id", value = "ctl82_cblCourses_2")#
+        scy$clickElement()  #
+    } # Uncheck SCY Button#
+#
+    # Select How Many Times To Display#
+    if(top > 500){#
+        warning("Can Not Excede Top 500 Times")#
+        stop()#
+    } # Create Warning and Stop Execution if we excede USA Swimmings Max Value#
+#
+    show_top<-remDr$findElement(using = "id", value = "ctl82_txtShowTopX")#
+    show_top$clearElement()#
+    show_top$sendKeysToElement(list(as.character(top)))#
+#
+    altitude<-remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")#
+    altitude$clickElement()#
+#
+    search<-remDr$findElement(using = "id", value ="ctl82_btnCreateReport")#
+    search$clickElement()#
+#
+    output_select<-remDr$findElement(using = "id", value = "ctl82_ucReportViewer_ddViewerType")#
+    output_select$sendKeysToElement(list("E", "E", "E"))
+startServer()#
+#
+    remDr<-remoteDriver(browserName = "firefox")#
+#
+    remDr$open(silent = TRUE)#
+#
+    remDr$navigate(url)#
+#
+    time_type<-remDr$findElement(using = "id", value = "ctl82_rbIndividual")#
+    time_type$clickElement() #Make Sure Indivual Times are Selected#
+#
+    # Select The Courses#
+    if(LCM == FALSE){#
+        lcm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_0")#
+        lcm$clickElement()#
+    } # Uncheck LCM Button#
+#
+    if(SCM == FALSE){#
+        scm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_1")#
+        scm$clickElement()  #
+    } # Uncheck SCM Button#
+#
+    if(SCY == FALSE){#
+        scy<-remDr$findElement(using = "id", value = "ctl82_cblCourses_2")#
+        scy$clickElement()  #
+    } # Uncheck SCY Button#
+#
+    # Select How Many Times To Display#
+    if(top > 500){#
+        warning("Can Not Excede Top 500 Times")#
+        stop()#
+    } # Create Warning and Stop Execution if we excede USA Swimmings Max Value#
+#
+    show_top<-remDr$findElement(using = "id", value = "ctl82_txtShowTopX")#
+    show_top$clearElement()#
+    show_top$sendKeysToElement(list(as.character(top)))#
+#
+    altitude<-remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")#
+    altitude$clickElement()#
+#
+    search<-remDr$findElement(using = "id", value ="ctl82_btnCreateReport")#
+    search$clickElement()#
+#
+    output_select<-remDr$findElement(using = "id", value = "ctl82_ucReportViewer_ddViewerType")#
+    output_select$sendKeysToElement(list("E", "E", "E"))
+url<-"http://usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en"#
+LCM<- FALSE#
+SCM<- FALSE#
+SCY<- TRUE#
+top<- 10
+remDr<-remoteDriver(browserName = "firefox")
+remDr$open(silent = TRUE)#
+#
+    remDr$navigate(url)#
+#
+    time_type<-remDr$findElement(using = "id", value = "ctl82_rbIndividual")#
+    time_type$clickElement() #Make Sure Indivual Times are Selected#
+#
+    # Select The Courses#
+    if(LCM == FALSE){#
+        lcm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_0")#
+        lcm$clickElement()#
+    } # Uncheck LCM Button#
+#
+    if(SCM == FALSE){#
+        scm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_1")#
+        scm$clickElement()  #
+    } # Uncheck SCM Button#
+#
+    if(SCY == FALSE){#
+        scy<-remDr$findElement(using = "id", value = "ctl82_cblCourses_2")#
+        scy$clickElement()  #
+    } # Uncheck SCY Button#
+#
+    # Select How Many Times To Display#
+    if(top > 500){#
+        warning("Can Not Excede Top 500 Times")#
+        stop()#
+    } # Create Warning and Stop Execution if we excede USA Swimmings Max Value#
+#
+    show_top<-remDr$findElement(using = "id", value = "ctl82_txtShowTopX")#
+    show_top$clearElement()#
+    show_top$sendKeysToElement(list(as.character(top)))#
+#
+    altitude<-remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")#
+    altitude$clickElement()#
+#
+    search<-remDr$findElement(using = "id", value ="ctl82_btnCreateReport")#
+    search$clickElement()#
+#
+    output_select<-remDr$findElement(using = "id", value = "ctl82_ucReportViewer_ddViewerType")#
+    output_select$sendKeysToElement(list("E", "E", "E"))
+change_output<-remDr$findElement(using = "id", value = "ctl82_ucReportViewer_lbChangeOutputType" )
+change_output$highlightElement(wait = 4)
+change_output$sendKeysToElement(key = "Return")
+change_output$clickElement()
+require(RSelenium)
+startServer()
+remDr$open(silent = TRUE)
+?reomoteDriver
+?remoteDriver
+remDr<-remoteDriver(browser = "chrome")
+remDr
+?require
+mtcars
+x<-mtcars
+x
+print(x)
+# Library Load#
+################################################################################
+library(dplyr)#
+library(data.table)#
+library(magrittr)#
+library(chron)#
+# Set Working Directory#
+setwd("data")
+getwd()
+setwd("data")
+master_times <- master_times %>%#
+    select(swim_date, team_short_name, team_code, gender, birth_date, full_name_computed, full_desc, event_id, swim_time, standard_name) %>%#
+    # Select Only Needed Columns#
+    arrange(team_code, event_id, swim_time, full_name_computed, swim_date) #
+    # Neatly Arrange Data Set.
+head(master_times)
+swim_time2 <- ifelse(master_times$event_id %in% c(1, 2)), paste("00:", swim_time), swim_time)
+swim_time2 <- ifelse(master_times$event_id %in% c(1, 2), paste("00:", swim_time), swim_time)
+swim_time2 <- ifelse(master_times$event_id %in% c(1, 2), paste("00:", master_times$swim_time), master_times$swim_time)
+swim_time2 <- ifelse(master_times$event_id %in% c(1, 2), paste("00:", master_times$swim_time, sep = ""), master_times$swim_time)
+nchar(master_times$swim_time[1,])
+nchar(master_times$swim_time[1])
+master_times$swim_time[1]
+swim_time2 <- ifelse(nchar(master_times$swim_time)<= 5, paste("00:", master_times$swim_time, sep = ""), master_times$swim_time)
+swim_time2
+library(lubridate)
+?ms
+master_times <- fread("Master.csv", sep = ",")#
+# Data Cleaning#
+################################################################################
+#
+master_times <- master_times %>%#
+    select(swim_date, team_short_name, team_code, gender, birth_date, full_name_computed, full_desc, event_id, swim_time, standard_name) %>%#
+    # Select Only Needed Columns#
+    mutate(swim_time2 = ifelse(nchar(master_times$swim_time)<= 5, paste("00:", master_times$swim_time, sep = ""), master_times$swim_time)) %>% #
+    # We need to reformat swim_time to be conssitent and allow ms() to work.#
+    mutate(swim_time2 = ms(swim_time2)) %>%#
+    # Format swim_time2 as duration element#
+    arrange(team_code, event_id, swim_time, full_name_computed, swim_date)#
+    # Neatly Arrange Data Set.
+master_times <- fread("Master.csv", sep = ",")
+master_times <- master_times %>%#
+    select(swim_date, team_short_name, team_code, gender, birth_date, full_name_computed, full_desc, event_id, swim_time, standard_name) %>%#
+    # Select Only Needed Columns#
+    mutate(swim_time2 = ifelse(nchar(master_times$swim_time)<= 5, paste("00:", master_times$swim_time, sep = ""), master_times$swim_time)) %>% #
+    # We need to reformat swim_time to be conssitent and allow ms() to work.#
+    mutate(swim_time2 = ms(swim_time2))
+master_times <- master_times %>%#
+    select(swim_date, team_short_name, team_code, gender, birth_date, full_name_computed, full_desc, event_id, swim_time, standard_name) %>%#
+    # Select Only Needed Columns#
+    mutate(swim_time2 = ifelse(nchar(master_times$swim_time)<= 5, paste("00:", master_times$swim_time, sep = ""), master_times$swim_time))
+master_times <- master_times %>%#
+    select(swim_date, team_short_name, team_code, gender, birth_date, full_name_computed, full_desc, event_id, swim_time, standard_name) %>%#
+    # Select Only Needed Columns#
+    mutate(swim_time2 = ifelse(nchar(master_times$swim_time)<= 5, paste("00:", master_times$swim_time, sep = ""), master_times$swim_time)) %>% #
+    # We need to reformat swim_time to be conssitent and allow ms() to work.#
+    #mutate(swim_time2 = ms(swim_time2)) %>%#
+    # Format swim_time2 as duration element#
+    arrange(team_code, event_id, swim_time, full_name_computed, swim_date)#
+    # Neatly Arrange Data Set.
+?times
+as.duration(ms(swim_time2))
+class(as.duration(ms(swim_time2)))
+class(ms(swim_time2))
+str(as.duration(ms(swim_time2)))
+str(ms(swim_time2))
+ms(swimtime2)@Data
+ms(swimtime2)@.Data
+ms(swimtime2)@
+ms(swim_time2)@.Data
+ms(swim_time2)
+master_times <- master_times %>%#
+    select(swim_date, team_short_name, team_code, gender, birth_date, full_name_computed, full_desc, event_id, swim_time, standard_name) %>%#
+    # Select Only Needed Columns#
+    mutate(swim_time2 = ifelse(nchar(master_times$swim_time)<= 5, paste("00:", master_times$swim_time, sep = ""), master_times$swim_time)) %>% #
+    # We need to reformat swim_time to be conssitent and allow ms() to work.#
+    mutate(swim_time2 = as.duration(ms(swim_time2)))
+60*4 + 47.3
+grep(",", master_times$full_name_computed[1])
+grep("*,", master_times$full_name_computed[1])
+grepl("*,", master_times$full_name_computed[1])
+library(stingr)
+library(stringr)
+str_locate(master_times$full_name_computed[1], ",")
+master_times$full_name_computed[1]
+str_locate(master_times$full_name_computed[1], ", ")
+str_locate(master_times$full_name_computed[1], " ")
+str_locate(master_times$full_name_computed[1], ", ")[2]
+str_locate(master_times$full_name_computed[1], ", ")$end
+str_locate(master_times$full_name_computed[1], ", ")[2] + 4
+first_position <- master_times %>%#
+    select(full_name_computed) %>%#
+    str_locate(", ")[2]
+master_times %>%#
+    select(full_name_computed) %>%#
+    str_locate(full_name_computed, ", ")[2]
+(str_locate(full_name_computed, ", ")[2])
+master_times %>%#
+    select(full_name_computed) %>%#
+    (str_locate(full_name_computed, ", ")[2])
+master_times %>%#
+    #select(full_name_computed) %>%#
+    str_locate(full_name_computed, ", ")[2]
+str_locate(master_timesfull_name_computed, ", ")[2]
+str_locate(master_times$full_name_computed, ", ")[2]
+first_position <- master_times %>%#
+    #select(full_name_computed) %>%#
+    str_locate(master_times$full_name_computed, ", ")[2]
+first_position <- master_times %>%#
+    str_locate(full_name_computed, ", ")
+master_times %>%#
+    str_locate(full_name_computed, ", ")
+master_times %>%#
+    select(full_name_computed) %>%#
+    str_locate(full_name_computed, ", ")
+master_times %>%#
+    select(full_name_computed) %>%#
+    str_locate( ", ")
+first_position <- master_times %>%#
+    select(full_name_computed) %>%#
+    str_locate( ", ")
+str_locate(master_times$full_name_computed, ", ")
+first_position$end
+str(first_position)
+first_position[2, ]
+first_position[2
+]
+first_position <- str_locate(master_times$full_name_computed, ", ") # Find start of first name.
+first_position
+first_name<-master_times %>%#
+    select(full_name_computed) %>%   #
+    substring(, first_position[, 2], (first_position[, 2]+ 4))
+first_position <- str_locate(master_times$full_name_computed, " ") # Find start of first name.#
+#
+first_name<-master_times %>%#
+    select(full_name_computed) %>%   #
+    substring( first_position[, 2], (first_position[, 2]+ 4)
+first_position <- str_locate(master_times$full_name_computed, " ") # Find start of first name.
+first_name<-master_times %>%#
+    select(full_name_computed) %>%   #
+    substring( first_position[, 2], (first_position[, 2]+ 4))
+first_position[, 2]
+first_position[, 2] + 4
+?substring
+first_name <- master_times %>%#
+    select(full_name_computed) %>%#
+    substr(str_locate("")[2], (str_locate("")[2] + 4))
+substr(str_locate(, "")[2], (str_locate(, "")[2] + 4))
+first_name <- master_times %>%#
+    select(full_name_computed) %>%#
+    substr(str_locate( " ")[2], (str_locate( " ")[2] + 4))
+first_name <- master_times %>%#
+    select(full_name_computed) %>%#
+    substr(str_locate(full_name_computed, " ")[2], (str_locate(full_name_computed, " ")[2] + 4))
+first_name <- master_times %>%#
+    select(full_name_computed) %>%#
+    substr(full_name_computed,  str_locate(full_name_computed, " ")[2], (str_locate(full_name_computed, " ")[2] + 4))
+master_times %>%#
+    substr(full_name_computed,  str_locate(full_name_computed, " ")[2], (str_locate(full_name_computed, " ")[2] + 4))
+first_name <- master_times %>%#
+    select(full_name_computed) %>%#
+    substr(full_name_computed,  str_locate(master_times$full_name_computed, " ")[2], (str_locate(master_times$full_name_computed, " ")[2] + 4))
+first_name <- master_times %>%#
+    select(full_name_computed) %>%#
+    substr(str_locate(master_times$full_name_computed, " ")[2], (str_locate(master_times$full_name_computed, " ")[2] + 4))
+first_name <-#
+    substr(master_times$full_name_computed, str_locate(master_times$full_name_computed, " ")[2], (str_locate(master_times$full_name_computed, " ")[2] + 4))
+first_name <-#
+    substr(master_times$full_name_computed, str_locate(master_times$full_name_computed, ", ")[2], (str_locate(master_times$full_name_computed, ", ")[2] + 4))
+master_times[922, ]
+first_name <-#
+    substr(master_times$full_name_computed, str_locate(master_times$full_name_computed, ", ")[1], (str_locate(master_times$full_name_computed, ", ")[1] + 4))
+first_name <-#
+    substr(master_times$full_name_computed, str_locate(master_times$full_name_computed, ", ")[1] + 2, (str_locate(master_times$full_name_computed, ", ")[1] + 6))
+master_times[923, ]
+str_locate(master_times$full_name_computed[923], ", ")[1] + 2,
+str_locate(master_times$full_name_computed[923], ", ")[1]
+str_locate(master_times$full_name_computed[923], ", ")[1] + 2
+strsplit(master_times$full_name_computed[923], ", ")[1] + 2
+strsplit(master_times$full_name_computed[923], ", ")
+str(strsplit(master_times$full_name_computed[923], ", "))
+strsplit(master_times$full_name_computed[923], ", ")[2]
+strsplit(master_times$full_name_computed[923], ", ")[[2]]
+strsplit(master_times$full_name_computed[923], ", ")[, 2]
+strsplit(master_times$full_name_computed[923], ", ")[1]
+strsplit(master_times$full_name_computed[923], ", ")[[1]]
+strsplit(master_times$full_name_computed[923], ", ")[1][2]
+strsplit(master_times$full_name_computed[923], ", ")[[1]][2]
+first_name <- master_times %>%#
+    select(full_name_computed) %>%#
+    strsplit(", ")
+first_name <- master_times %>%#
+    select(full_name_computed) %>%#
+    strsplit(full_name_computed, ", ")[[]][2]
+first_name <- master_times %>%#
+    select(full_name_computed) %>%#
+    strsplit(full_name_computed, ", ")
+firstnames[[]][2]
+firstnames[1][2]
+first_name[1][2]
+?lapply
+str(first_name)
+first_name[2]
+first_name[2, 2]
+first_name[, 2]
+first_name[[i]][2]
+first_name[][2]
+first_name[[]][2]
+first_name <- strsplit(master_times$full_name_computed, ", ")[2]
+?strsplit
+?unlist
+unlist(first_name)
+unlist(first_name)[, 2]
+unlist(first_name)[2]
+lapply(first_name, unlist)
+lapply(first_name, unlist)[2]
+lapply(first_name[2], unlist)
+lapply(first_name[2], unlist())
+lapply(first_name, unlist())
+first_name <- unlist(first_name)
+first_name[ 2]
+first_name[ 10]
+first_name <- strsplit(master_times$full_name_computed, ", ")
+length(first_name)
+first_name2 <- for(i in 1:length(first_name)){#
+    first_name[[i]][2]#
+#
+}
+first_name <- strsplit(master_times$full_name_computed, ", ")#
+first_name2 <- c() #
+    for(i in 1:length(first_name)){#
+    first_name2[i] <- first_name[first_name[[i]][2]#
+}
+first_name <- strsplit(master_times$full_name_computed, ", ")#
+first_name2 <- c() #
+    for(i in 1:length(first_name)){#
+    first_name2[i] <- first_name[i]][2]#
+}
+first_name <- strsplit(master_times$full_name_computed, ", ")#
+first_name2 <- c() #
+    for(i in 1:length(first_name)){#
+    first_name2[i] <- first_name[[i]][2]#
+}
+first_name2
+sperate_name<- strsplit(master_times$full_name_computed, ", ")#
+first_name <- c() #
+    for(i in 1:length(first_name)){#
+    first_name[i] <- first_name[[i]][2]#
+}#
+first_name <- substr(first_name, 1, 4)
+sperate_name<- strsplit(master_times$full_name_computed, ", ")#
+first_name <- c() #
+    for(i in 1:length(sperate_name)){#
+    first_name[i] <- first_name[[i]][2]#
+}#
+first_name <- substr(first_name, 1, 4)
+sperate_name<- strsplit(master_times$full_name_computed, ", ")#
+first_name <- c() #
+    for(i in 1:length(sperate_name)){#
+    first_name[i] <- sperate_name[[i]][2]#
+}#
+first_name <- substr(first_name, 1, 4)
+first_name
+## Creae Athlete ID.  #
+  # Athlete ID will folow USAS pattern. Bithdate First; 3 letters of first #
+  # name; first 4 leters of last name. (mm/dd/yyseawarl)#
+#
+### Extract and Substring First Name ----#
+name_list<- strsplit(master_times$full_name_computed, ", ") # Split name variable. Returned as a list#
+#
+first_name <- c() # Create vector for first names#
+#
+for(i in 1:length(name_list)){#
+    first_name[i] <- name_list[[i]][2]#
+} # Extract First Name From List#
+#
+first_name <- substr(first_name, 1, 3) # Substring First Name#
+#
+### Extract Last Name ----#
+last_name <- substr(master_times$full_name_computed, 1, 4)#
+#
+### Create the Athlete_ID ---#
+master_times <- master_times %>%#
+    mutate(athlete_id = paste(birth_date, first_name, last_name, sep = ""))
+## Creae Athlete ID.  #
+  # Athlete ID will folow USAS pattern. Bithdate First; 3 letters of first #
+  # name; first 4 leters of last name. (mm/dd/yyseawarl)#
+#
+### Extract and Substring First Name ----#
+name_list<- strsplit(master_times$full_name_computed, ", ") # Split name variable. Returned as a list#
+#
+first_name <- c() # Create vector for first names#
+#
+for(i in 1:length(name_list)){#
+    first_name[i] <- name_list[[i]][2]#
+} # Extract First Name From List#
+#
+first_name <- substr(first_name, 1, 3) # Substring First Name#
+first_name <- tolower(first_name) # move to lower case for neatness#
+#
+### Extract Last Name ----#
+last_name <- substr(master_times$full_name_computed, 1, 4)#
+last_name <- tolower(last_name) # Move to lower case for neatness#
+#
+### Create the Athlete_ID ---#
+master_times <- master_times %>%#
+    mutate(athlete_id = paste(birth_date, first_name, last_name, sep = ""))
+master_times
+fread("2016_NCAA Times")
+?fread
+ms(cuts$men_a)
+ms(trim(cuts$men_a))
+?trim
+?str_locate
+cuts<-fread("2016_NCAA Times")
+cuts
+ms(str_trim(cuts$men_a))
+str(cuts)
+q()
