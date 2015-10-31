@@ -9,6 +9,7 @@ library(dplyr)
 library(data.table)
 library(magrittr)
 library(lubridate)
+library(stringr)
 
 
 # Set Working Directory
@@ -20,7 +21,7 @@ file.copy("Big Ten.csv", "Master.csv")  # This will later be moved to web scrapi
 file.append("Master.csv", "PAC 12.csv") # This will later be moved to web scraping function
 
 master_times <- fread("Master.csv", sep = ",")
-
+cut_times <- cut_times<-read.csv("ncaa_times_2016.csv", quote = " \" ")
 
 # General Data Cleaning
 ###############################################################################
@@ -28,9 +29,15 @@ master_times <- fread("Master.csv", sep = ",")
 master_times <- master_times %>%
 	select(swim_date, team_short_name, team_code, gender, birth_date, full_name_computed, full_desc, event_id, swim_time, standard_name) %>%
 	# Select Only Needed Columns
+
+	mutate(full_desc = substring(full_desc, 1, (unlist(gregexpr("SCY", full_desc)) - 1))) %>%
+	# To make easy joins eliminate SCY and the gender from the event name.
+
+	mutate(full_desc = str_trim(full_desc, side = "right")) %>%
+	# Trim whitespace from event name.
 	
 	mutate(swim_time2 = ifelse(nchar(master_times$swim_time)<= 5, paste("00:", master_times$swim_time, sep = ""), master_times$swim_time)) %>% 
-	# We need to reformat swim_time to be conssitent and allow ms() to work.
+	# We need to reformat swim_time to be consitent and allow ms() to work.
 	
 	mutate(swim_time2 = as.duration(ms(swim_time2))) %>%
 	# Format swim_time2 as duration element. Duration is in seconds.
@@ -38,7 +45,12 @@ master_times <- master_times %>%
 	arrange(team_code, event_id, swim_time, full_name_computed, swim_date)
 	# Neatly Arrange Data Set.
 
-# Creae Athlete ID.
+# Prepare Cut Times Data Set
+###############################################################################
+cut_times <- cut_times %>%
+	mutate(time2 = as.duration(ms(time)))
+
+# Create Athlete ID.
 ###############################################################################
 ## Athlete ID will folow USAS pattern. Bithdate First; 3 letters of first name; first 4 leters of last name. (mm/dd/yyseawarl)
 
@@ -64,13 +76,22 @@ master_times <- master_times %>%
 	mutate(athlete_id = paste(birth_date, first_name, last_name, sep = ""))
 
  
-# Internal Event Ranking
+# Team Ranking in Each Event
 ###############################################################################
 ## For each team we will rank the swimmers in each event.
 
 master_times <- master_times %>% 
 	group_by(team_code, gender, event_id)  %>%
 	mutate(team_event_rank = rank(swim_time))
+
+# Determine Each Swimmers Best Events
+###############################################################################
+
+## Add B Cut Information to Calculate A Swimmers Best Events ----
+b_cuts <- cut_times %>% 
+	filter(standard == "B") %>%
+	select(event, gender, time2)
+	# Create B Cut Data Set
 
 
 
