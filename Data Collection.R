@@ -6,7 +6,7 @@
 
 url<-"http://usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en"
 
-individual_swims<-function(LCM, SCM, SCY, top){
+individual_swims<-function(Conference, LCM, SCM, SCY, top){
 	require(RSelenium) # Rselenium Provides Tools Fill Out Search Form. 
 	
 	startServer() # Star Selenium Server
@@ -83,7 +83,7 @@ individual_swims<-function(LCM, SCM, SCY, top){
 
 	change_output$clickElement()
 
-	Sys.sleep(15) # Give Time for Down Load
+	Sys.sleep(30) # Give Time for Down Load
 
 
 	# File Management
