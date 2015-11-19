@@ -92,15 +92,16 @@ b_cuts <- cut_times %>%
 	filter(standard == "B") %>%
 	select(event, gender, time2)
 
-
 ## Join B Cut Data
-master_times <- right_join(master_times, as.data.table(b_cuts), by = c("event", "gender")) 
-	# We need to do a right join to deal with 1000 Freestyle
+master_times <- full_join(master_times, as.data.table(b_cuts), by = c("event", "gender")) 
+	# We need to do a full join to deal with 1000 Freestyle
 
 ## Rank Each Swimmers Best Events
 master_times <- master_times %>%
 	mutate(b_cut_diff = ((swim_time2 - time2) / time2)) %>%
 		# Caclucate percentage off of B Cut
 	group_by(athlete_id) %>%
-	mutate(swimmer_event_rank = rank(b_cut_diff))
+	mutate(swimmer_event_rank = rank(b_cut_diff)) %>%
 		# Rank By Difference From B Cut
+	select()
+		# Clean up the data set. 
