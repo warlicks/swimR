@@ -71,7 +71,6 @@ individual_swims<-function(Conference, LCM = FALSE, SCM = FALSE, SCY = TRUE, top
 	search <- remDr$findElement(using = "id", value = "ctl82_btnCreateReport")
 	search$clickElement()
     
-    Sys.sleep(10)
 
  #    Sys.sleep(20) # Need to pause to get the export click to work
 	
@@ -84,7 +83,7 @@ individual_swims<-function(Conference, LCM = FALSE, SCM = FALSE, SCY = TRUE, top
 	output_select$sendKeysToElement(list("E", "E", "E"))
 	change_output <- remDr$findElement(using = "id", value = "ctl82_ucReportViewer_lbChangeOutputType" )
 	
-	Sys.sleep(5) # Need to pause to get the export click to work
+	Sys.sleep(10) # Need to pause to get the export click to work
 
 	change_output$clickElement()
 
@@ -92,17 +91,17 @@ individual_swims<-function(Conference, LCM = FALSE, SCM = FALSE, SCY = TRUE, top
 	Sys.sleep(30) # Give Time for Down Load
 
 
-	# File Management
-	file <- list.files(path = "/Users/SeanWarlick/Downloads", pattern = "*.csv")
+	# # File Management
+	# file <- list.files(path = "/Users/SeanWarlick/Downloads", pattern = "*.csv")
 
-	file.rename(file, paste(Conference, ".csv", sep = "")) #Give Meaningful Name
+	# file.rename(file, paste(Conference, ".csv", sep = "")) #Give Meaningful Name
 
 
 	remDr$close()
 
-	#Combine To One File
-	setwd("")
-	list.files()
+	# #Combine To One File
+	# setwd("")
+	# list.files()
 
 }
 
