@@ -10,16 +10,18 @@ library(data.table)
 library(magrittr)
 library(lubridate)
 library(stringr)
+library(ggvis)
 
 
 # Set Working Directory
-setwd("data")
+#setwd("data")
 
 # File Management and Data Load
 ###############################################################################
-file.copy("Big Ten.csv", "Master.csv")  # This will later be moved to web scraping function
-file.append("Master.csv", "PAC 12.csv") # This will later be moved to web scraping function
+#file.copy("Big Ten.csv", "Master.csv")  # This will later be moved to web scraping function
+#file.append("Master.csv", "PAC 12.csv") # This will later be moved to web scraping function
 
+setwd("~/Documents/Github/swimming_app/data")
 master_times <- fread("Master.csv", sep = ",")
 cut_times <- cut_times<-read.csv("ncaa_times_2016.csv", quote = " \" ")
 
@@ -101,7 +103,7 @@ master_times <- master_times %>%
 	mutate(b_cut_diff = ((swim_time2 - time2) / time2)) %>%
 		# Caclucate percentage off of B Cut
 	group_by(athlete_id) %>%
-	mutate(swimmer_event_rank = rank(b_cut_diff)) %>%
+	mutate(swimmer_event_rank = rank(b_cut_diff)) 
 		# Rank By Difference From B Cut
-	select()
+	#select()
 		# Clean up the data set. 

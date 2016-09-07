@@ -4,20 +4,23 @@
 # from USA Swimming's Website. 
 ###############################################################################
 
-url<-"http://usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en"
+
+
 
 individual_swims<-function(Conference, LCM, SCM, SCY, top){
 	require(RSelenium) # Rselenium Provides Tools Fill Out Search Form. 
+
+	url<-"http://usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en"
 	
 	startServer() # Star Selenium Server
 
-	remDr<-remoteDriver(browser = "firefox")
+	remDr <- remoteDriver(remoteServerAddr = 'localhost', browser = "chrome")
 
-	remDr$open(silent = TRUE)
+	remDr$open(silent = FALSE)
 
 	remDr$navigate(url)
 
-	time_type<-remDr$findElement(using = "id", value = "ctl82_rbIndividual")
+	time_type <- remDr$findElement(using = "id", value = "ctl82_rbIndividual")
 	time_type$clickElement() #Make Sure Indivual Times are Selected
 
 	# Figuring Out How To Select Conference
@@ -68,16 +71,16 @@ individual_swims<-function(Conference, LCM, SCM, SCY, top){
 	#	altitude$clickElement()
 	#} This Will Be USED WHEN I CREATE LOOP TO PULL ALL CONFERENCES
 
-	altitude<-remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")
+	altitude <- remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")
 	altitude$clickElement()
 
-	search<-remDr$findElement(using = "id", value ="ctl82_btnCreateReport")
+	search <- remDr$findElement(using = "id", value ="ctl82_btnCreateReport")
 	search$clickElement()
 
 	# Change The Output To CSV & Save!
-	output_select<-remDr$findElement(using = "id", value = "ctl82_ucReportViewer_ddViewerType")
+	output_select <- remDr$findElement(using = "id", value = "ctl82_ucReportViewer_ddViewerType")
 	output_select$sendKeysToElement(list("E", "E", "E"))
-	change_output<-remDr$findElement(using = "id", value = "ctl82_ucReportViewer_lbChangeOutputType" )
+	change_output <- remDr$findElement(using = "id", value = "ctl82_ucReportViewer_lbChangeOutputType" )
 	
 	Sys.sleep(5) # Need to pause to get the export click to work
 
@@ -87,9 +90,9 @@ individual_swims<-function(Conference, LCM, SCM, SCY, top){
 
 
 	# File Management
-	file<-list.files(path = "/Users/SeanWarlick/Downloads", pattern = "*.csv")
+	file <- list.files(path = "/Users/SeanWarlick/Downloads", pattern = "*.csv")
 
-	file.rename(file, paste(Conference, ".csv", sep ="")) #Give Meaningful Name
+	file.rename(file, paste(Conference, ".csv", sep = "")) #Give Meaningful Name
 
 	file_rename<-list.files(path = "/Users/SeanWarlick/Downloads", pattern = "*.csv") # Store New Name For Ease
 
