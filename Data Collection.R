@@ -7,36 +7,27 @@
 
 
 
-individual_swims<-function(Conference, LCM, SCM, SCY, top){
+individual_swims<-function(Conference, LCM = FALSE, SCM = FALSE, SCY = TRUE, top){
 	require(RSelenium) # Rselenium Provides Tools Fill Out Search Form. 
 
 	url<-"http://usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en"
 	
-	startServer() # Star Selenium Server
+	selserv <- startServer(args = c("-port 4445")) # Star Selenium Server
 
-	remDr <- remoteDriver(remoteServerAddr = 'localhost', browser = "chrome")
+	remDr <- remoteDriver(remoteServerAddr = 'localhost', port = 4445, browser = "firefox", extraCapabilities = fprof)
 
-	remDr$open(silent = FALSE)
+	remDr$open(silent = TRUE)
 
 	remDr$navigate(url)
 
 	time_type <- remDr$findElement(using = "id", value = "ctl82_rbIndividual")
 	time_type$clickElement() #Make Sure Indivual Times are Selected
 
-	# Figuring Out How To Select Conference
-	if(Conference == "Big Ten"){
-		conference_select<-list("B", "B", "B")
-	} else {
-	  if(Conference == "PAC 12"){
-	  	conference_select<-list("P")
-	  } else {
-		warning("Conference Not Found.  Please Use One Of The Following:")
-		print(conference_list)
-	  }
-	} # WILL OVERHAUL THIS TO ITERATIVELY PULL EACH CONFERENCE!
+	conference_select <- key_press(Conference)
 
 	conference<-remDr$findElement(using = "id", value = "ctl82_ddConference")
 	conference$sendKeysToElement(conference_select)
+
 
 	# Select The Courses
 	# NEED TO MODIFY THIS IF PLACED IN LOOP SO THAT THEY DON'T GET TURNED BACK ON
@@ -74,8 +65,19 @@ individual_swims<-function(Conference, LCM, SCM, SCY, top){
 	altitude <- remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")
 	altitude$clickElement()
 
-	search <- remDr$findElement(using = "id", value ="ctl82_btnCreateReport")
+	#output_select <- remDr$findElement(using = "id", value = "ctl82_ddOutputType")
+	#output_select$sendKeysToElement(list('R'))
+
+	search <- remDr$findElement(using = "id", value = "ctl82_btnCreateReport")
 	search$clickElement()
+    
+    Sys.sleep(10)
+
+ #    Sys.sleep(20) # Need to pause to get the export click to work
+	
+	# report_frame <- remDr$findElement(using = "tag name", value = "iframe")
+
+	# report_frame$click(buttonId = "RIGHT")
 
 	# Change The Output To CSV & Save!
 	output_select <- remDr$findElement(using = "id", value = "ctl82_ucReportViewer_ddViewerType")
@@ -86,6 +88,7 @@ individual_swims<-function(Conference, LCM, SCM, SCY, top){
 
 	change_output$clickElement()
 
+
 	Sys.sleep(30) # Give Time for Down Load
 
 
@@ -94,13 +97,6 @@ individual_swims<-function(Conference, LCM, SCM, SCY, top){
 
 	file.rename(file, paste(Conference, ".csv", sep = "")) #Give Meaningful Name
 
-	file_rename<-list.files(path = "/Users/SeanWarlick/Downloads", pattern = "*.csv") # Store New Name For Ease
-
-	file.copy(from = paste("/Users/SeanWarlick/Downloads/", file_rename, sep = ""), to = "/Users/SeanWarlick/Documents/GitHub/swimming_app/data") # Copy File to Data Location
-
-	file.remove(paste("/Users/SeanWarlick/Downloads/", file_rename, sep = "")) # Remove File From Download. 
-
-	# IF I PUT THIS IN A LOOP THIS WILL BE THE END OF THE LOOP
 
 	remDr$close()
 
