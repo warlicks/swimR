@@ -8,7 +8,7 @@
 #'
 #' @return a list.  Each character from the start date is an element of the list.
 #'
-#' @seealso \code{\link[RSelenium]{remoteDriver}}
+#' @seealso \code{\link[RSelenium]{remoteDriver}} \code{\link{individual_swims}}
 #'
 #' @export
 #'
@@ -41,9 +41,9 @@ start_dateParse <- function(start_date){
 #'
 #' @param end_date
 #'
-#' @return a list.  Each character from the start date is an element of the list.
+#' @return a list.  Each character from the end date is an element of the list.
 #'
-#' @seealso \code{\link[RSelenium]{remoteDriver}}
+#' @seealso \code{\link[RSelenium]{remoteDriver}} \code{\link{individual_swims}}
 #'
 #' @export
 #'

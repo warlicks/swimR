@@ -10,7 +10,7 @@ end_dateParse(end_date)
 \item{end_date}{}
 }
 \value{
-a list.  Each character from the start date is an element of the list.
+a list.  Each character from the end date is an element of the list.
 }
 \description{
 \code{end_dateParse} is an internal function used in \code{individual_swims}.
@@ -19,6 +19,6 @@ a list.  Each character from the start date is an element of the list.
 \code{start_dateParse} is an internal function used in \code{individual_swims}.  It prepares the \emph{end_date} argument in \code{individual_swims} so that \strong{RSelenium} can pass it to the date fields on \href{http://www.usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en}{USA Swimming's Top Times Report} form.  It converts each character in \emph{end_date} into an element of a list.
 }
 \seealso{
-\code{\link[RSelenium]{remoteDriver}}
+\code{\link[RSelenium]{remoteDriver}} \code{\link{individual_swims}}
 }
 
