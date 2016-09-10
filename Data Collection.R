@@ -4,9 +4,19 @@
 # from USA Swimming's Website. 
 ###############################################################################
 
+#' Retrive Report From USA Swimming's NCAA DI Top Times Report
 #'
+#' \code{individual_swims} fills out the report search form to retrun a top time report.  
 #'
-#'
+#' @param Conference a character string.  The name of a Division 1 conference. 
+#' @param start_date a character string.   Defines the begining of the period for the times report. It is entered as a character string in the format 'YYYY-MM-DD'.
+#' @param end_date a character string.   Defines the end of the period for the times report. It is entered as a character string in the format 'YYYY-MM-DD'.
+#' @param LCM logical.  Optional. Should long course meter events be included in the report?  Defaults to FALSE.
+#' @param SCM logical.  Optional. Should short course meter events be included in the report?  Defaults to FALSE.
+#' @param SCY logical.  Optional. Should short course yard events be included in the report?  Defaults to TRUE.
+#' @param top integer. How many swimmers should be returned in each event? Maximum allowed is 500. 
+#' @param
+
 
 
 individual_swims<-function(Conference, start_date = '2015-08-01', end_date = '2015-05-31', LCM = FALSE, SCM = FALSE, SCY = TRUE, top, downloadPath = getwd(), read = TRUE){
@@ -56,8 +66,11 @@ individual_swims<-function(Conference, start_date = '2015-08-01', end_date = '20
 
 	## Start Date
 	start_dateBox <- remDr$findElement(using = "id", value = "ctl00_ctl82_ucStartDate_radTheDate_dateInput")
-	start_date <- startDateParse(start_date)
+	start_date <- start_dateParse(start_date)
 	start_dateBox$sendKeysToElement(start_date)
+
+	end_dateBox <- remDr$findElement(using = "id", value = "ctl00_ctl82_ucEndDate_radTheDate_dateInput")
+	end_date <- endDateParse(end_date)
 
 	# Select How Many Times To Display
 	if(top > 500){
@@ -65,7 +78,7 @@ individual_swims<-function(Conference, start_date = '2015-08-01', end_date = '20
 		stop()
 	} # Create Warning and Stop Execution if we excede USA Swimmings Max Value
 
-	show_top<-remDr$findElement(using = "id", value = "ctl82_txtShowTopX")
+	show_top <- remDr$findElement(using = "id", value = "ctl82_txtShowTopX")
 	show_top$clearElement()
 	show_top$sendKeysToElement(list(as.character(top)))
 
