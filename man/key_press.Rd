@@ -2,14 +2,25 @@
 % Please edit documentation in R/key_press.R
 \name{key_press}
 \alias{key_press}
-\title{An interal function used}
+\title{Prepare Confernce Selection To Be Passed RSelenium}
 \usage{
 key_press(Conference)
 }
 \arguments{
-\item{conf}{A Character String}
+\item{Conference}{character string.  The name of the conference for which the top times report should be run.}
+}
+\value{
+a list. The number of elements in the list coresponds to the position of the confernce supplied to the function in the group of confernces that start with the same letter.
 }
 \description{
-An interal function used
+An interal function used in \code{\link{individual_swims}}.
+}
+\details{
+An interal function used in \code{\link{individual_swims}}.  It prepares a a list of characters that RSelenium passes to \href{http://www.usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en}{USA Swimming's Top Times Report}.  The output is used to select the Conference.
+
+The function gathers the list of Confernces from the drop down menu on the \href{http://www.usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en}{Top Times Report}.  It finds all the conferences that have the same first letter as the one supplied to the function.  The position of the supplied conference in this list is then used to generate a list which can be used by \code{\link{remoteDriver}}\code{$sendKeysToElement}.  The number of elements in the list coresponds to the position of the confernce supplied to the function in the group of confernces that start with the same letter.
+}
+\seealso{
+\code{\link[RSelenium]{remoteDriver}} \code{\link{individual_swims}} \code{\link{get_conferences}}
 }
 

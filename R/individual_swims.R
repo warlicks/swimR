@@ -68,12 +68,12 @@ individual_swims<-function(Conference, start_date = '2015-08-01', end_date = '20
 
 	## Start Date
 	start_dateBox <- remDr$findElement(using = "id", value = "ctl00_ctl82_ucStartDate_radTheDate_dateInput")
-	start_date <- start_dateParse(start_date)
+	start_date <- date_parse(start_date)
 	start_dateBox$sendKeysToElement(start_date)
 
 	## End Date
 	end_dateBox <- remDr$findElement(using = "id", value = "ctl00_ctl82_ucEndDate_radTheDate_dateInput")
-	end_date <- end_dateParse(end_date)
+	end_date <- date_parse(end_date)
 	end_dateBox$sendKeysToElement(end_date)
 
 	# Select How Many Times To Display ----
