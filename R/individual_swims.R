@@ -139,7 +139,7 @@ individual_swims<-function(Conference, start_date = '2015-08-01', end_date = '20
 	file.rename(file_name, paste(Conference, ".csv", sep = "")) #Give Meaningful Name
 
 	if(read){
-		data <- read.csv(paste(Conference, ".csv", sep = ""))
+		data <- read.csv(paste(Conference, ".csv", sep = ""), stringsAsFactors = FALSE)
 		return(data)
 	}
 
