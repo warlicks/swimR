@@ -115,6 +115,8 @@ individual_swims<-function(Conference, start_date = '2015-08-01', end_date = '20
 	search <- remDr$findElement(using = "id", value = "ctl82_btnCreateReport")
 	search$clickElement()
 
+	Sys.sleep(5)
+
 	# Change The Output To CSV & Save! ----
 	output_select <- remDr$findElement(using = "id", value = "ctl82_ucReportViewer_ddViewerType")
 	output_select$sendKeysToElement(list("E", "E", "E"))
