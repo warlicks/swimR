@@ -66,6 +66,9 @@ key_press <- function(Conference){
 #' @return a data frame.  
 #' @export 
 get_conferences <- function(division, printer = FALSE){
+
+	require(rvest)
+	require(dplyr)
 	
 	# Set URL Based on divsion selected ----
 	if(division == 1){
