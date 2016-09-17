@@ -9,7 +9,7 @@ individual_swims(Conference, start_date = "2015-08-01",
   downloadPath = getwd(), read = TRUE)
 }
 \arguments{
-\item{Conference}{a character string.  The name of a Division 1 conference.}
+\item{Conference}{a character string.  The name of a Division I conference.}
 
 \item{start_date}{a character string.   Defines the begining of the period for the times report. It is entered as a character string in the format 'YYYY-MM-DD'.}
 
@@ -23,11 +23,32 @@ individual_swims(Conference, start_date = "2015-08-01",
 
 \item{top}{integer. How many swimmers should be returned in each event? Maximum allowed is 500.}
 
-\item{downloadPath}{character sting}
+\item{downloadPath}{character sting repersenting a file directory where the returned top times report should be saved.  By default it saves the file to the current working directory.}
 
-\item{read}{logical}
+\item{read}{logical indicating if the downloaded file should be loaded into R's memory.}
+}
+\value{
+If \emph{read = TRUE} a data frame is returned.  In both cases a \emph{.csv} file is created in the given directory.
 }
 \description{
-\code{individual_swims} fills out the report search form to retrun a top time report.
+\code{individual_swims} fills out \href{http://www.usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en}{USA Swimmings Top Times} report form to retrun a top time report.
+}
+\details{
+\code{individual_swims} fills out \href{http://www.usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en}{USA Swimmings Top Times} report form to retrun a top time report.  The function fills out form and downloads the as \emph{.csv} file without any human interaction.
+
+To fill out the Top Times report form \code{individual_swims()} utilizes \code{\link[RSelenium]{RSelenium}} RSelenium requires a Selenium Server.  The function automatically checks to make sure that the Selenium Server is installed.  If one is not found it downloads the most recent version.
+
+\strong{Note:} the package was developed using Firefox 47.0.1 and Selenium Standalone Server 2.53.1.  It is important to make sure that the server version being used is compatiable with the browser being used.
+
+By default the function reads the downlaoded file into memory and stores it as the assigned variable name.  If you select not to read the file into memory it returns the path where the file was saved.
+
+The function automatically renames the file downloaded to \emph{confernece.csv}.  If a file with the name \emph{confernce.csv} already exists in chosen directory, it will write over the existing file.
+}
+\examples{
+report <- individual_swims('Big Ten', start_date = '2015-09-01', end_date = '2015-10-01', read = TRUE)
+report <- individual_swims('Big Ten', start_date = '2015-09-01', end_date = '2015-10-01', read = FALSE)
+}
+\seealso{
+\code{\link[RSelenium]{RSelenium}}
 }
 

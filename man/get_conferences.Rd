@@ -7,9 +7,9 @@
 get_conferences(division, printer = FALSE)
 }
 \arguments{
-\item{division}{integer.  1 for NCAA Division 1. 2 for NCAA Division 2, 3 for NCAA Divison 3.}
+\item{division}{integer.  1 for NCAA Division I. 2 for NCAA Division II, 3 for NCAA Divison III.}
 
-\item{printer}{logical.  If turn the list of conferences will be printed to the console.  Defaults to FALSE.}
+\item{printer}{logical.  If TRUE the list of conferences will be printed to the console.  Defaults to FALSE.}
 }
 \value{
 a data frame.

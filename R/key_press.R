@@ -60,8 +60,8 @@ key_press <- function(Conference){
 #'
 #'The list of college swimming confernces is returned as a one column data frame.   
 #'
-#' @param division integer.  1 for NCAA Division 1. 2 for NCAA Division 2, 3 for NCAA Divison 3.
-#' @param printer logical.  If turn the list of conferences will be printed to the console.  Defaults to FALSE. 
+#' @param division integer.  1 for NCAA Division I. 2 for NCAA Division II, 3 for NCAA Divison III.
+#' @param printer logical.  If TRUE the list of conferences will be printed to the console.  Defaults to FALSE. 
 #'
 #' @return a data frame.  
 #' @export 
