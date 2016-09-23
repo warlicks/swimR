@@ -9,10 +9,16 @@ time_convert(data)
 \arguments{
 \item{data}{The data frame provided in \code{\link{data_clean}}}
 }
+\value{
+The original data frame with an additiona column for the athletes time of class duration.
+}
 \description{
 An internal function used in \code{\link{data_clean}}
 }
 \details{
 \code{time_convert} is an internal function used in \code{\link{data_clean}} to convert the athletes time from a character type to a variable type that can be used in calculations.  It utilizes \code{\link[lubridate]{lubridate}} to perform the conversion.
+}
+\seealso{
+\code{\link[lubridate]{duration}}
 }
 

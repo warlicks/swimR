@@ -28,6 +28,5 @@ id_create <- function(data){
 	last_name <- tolower(last_name) # Move to lower case for neatness
 
 	# Create complete id ----
-	data$athlete_id <- paste(data$birth_date, first_name, last_name, sep = "")
-	return(data)
+	return(dplyr::mutate(data, athlete_id = paste(data$birth_date, first_name, last_name, sep = "")))
 }

@@ -10,7 +10,7 @@
 #'
 #' \code{individual_swims} fills out \href{http://www.usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en}{USA Swimmings Top Times} report form to retrun a top time report.  The function fills out form and downloads the as \emph{.csv} file without any human interaction.
 #'
-#' To fill out the Top Times report form \code{individual_swims()} utilizes \code{\link[RSelenium]{RSelenium}} RSelenium requires a Selenium Server.  The function automatically checks to make sure that the Selenium Server is installed.  If one is not found it downloads the most recent version.
+#' To fill out the Top Times report form \code{individual_swims()} utilizes \code{\link[RSelenium]{RSelenium}}. RSelenium requires a Selenium Server.  The function automatically checks to make sure that the Selenium Server is installed.  If one is not found it downloads the most recent version.
 #'
 #' \strong{Note:} the package was developed using Firefox 47.0.1 and Selenium Standalone Server 2.53.1.  It is important to make sure that the server version being used is compatiable with the browser being used.
 #'
