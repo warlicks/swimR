@@ -32,7 +32,7 @@
 #'	  \item{\strong{standard_name}}{Lists the swimming standard (A or B cut time), if applicable}
 #'}
 
-
+#' @export
 
 clean_swim <- function(data){
 
