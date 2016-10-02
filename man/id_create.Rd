@@ -16,6 +16,6 @@ The function creates a new column
 An internal function used by \code{\link{data_clean}}
 }
 \details{
-\code{id_create} is an internal function used by \code{\link{data_clean}}.  It creates an unique id for each athlete.  The athlete id follows the format used by USA Swimming. Bithdate First; 3 letters of first name; first 4 leters of last name. (mm/dd/yyseawarl)
+\code{id_create} is an internal function used by \code{\link{data_clean}}.  It creates an unique id for each athlete.  The athlete id follows the format used by USA Swimming. Bithdate First; 3 letters of first name; first 4 leters of last name. (mm/dd/yyjansmit)
 }
 
