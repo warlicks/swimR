@@ -30,25 +30,27 @@ cut_times <- function(url, division = 1, yr = NA){
 	qualifying_standard <- dplyr::bind_rows(men_a, men_b, women_a, women_b) %>%
 		dplyr::select(event, gender, standard, swim_time, swim_time2)
 
-	# Set Up Variables For File Naming ----
+	return(qualifying_standard)
+
+	# # Set Up Variables For File Naming ----
 	
-	## Set Up Year
-	if(is.na(yr)){
-		yr <- (lubridate::year(Sys.Date()) + 1)
-	}
+	# ## Set Up Year
+	# if(is.na(yr)){
+	# 	yr <- (lubridate::year(Sys.Date()) + 1)
+	# }
 
-	## Set Up NCAA Division
-	if(division == 1){
-		division_name <- "DI"	
-	} else if(division == 2) {
-		division_name <- "DII"
-	} else {
-		division_name <- "DIII"
-	}
+	# ## Set Up NCAA Division
+	# if(division == 1){
+	# 	division_name <- "DI"	
+	# } else if(division == 2) {
+	# 	division_name <- "DII"
+	# } else {
+	# 	division_name <- "DIII"
+	# }
 
-	file_name <- paste(division_name, "Qualifying", yr, ".rdata", sep = "")
-	file_path <- paste("./data/", file_name, sep ="")
+	# file_name <- paste(division_name, "Qualifying", yr, ".rdata", sep = "")
+	# file_path <- paste("./data/", file_name, sep ="")
 
-	# Save File to /data
-	save(qualifying_standard, file = file_path)
+	# # Save File to /data
+	# save(qualifying_standard, file = file_path)
 }
