@@ -34,7 +34,7 @@ cut_times <- function(url, division = 1, yr = NA){
 	
 	## Set Up Year
 	if(is.na(yr)){
-		yr <- lubridate::year(Sys.Date())
+		yr <- (lubridate::year(Sys.Date()) + 1)
 	}
 
 	## Set Up NCAA Division
@@ -46,9 +46,9 @@ cut_times <- function(url, division = 1, yr = NA){
 		division_name <- "DIII"
 	}
 
-	file_name <- paste(yr, division_name, "Qualifying.RData", sep = "")
+	file_name <- paste(division_name, "Qualifying", yr, ".rdata", sep = "")
 	file_path <- paste("./data/", file_name, sep ="")
 
 	# Save File to /data
-	#save(qualifying_standard, file = file_path)
+	save(qualifying_standard, file = file_path)
 }
