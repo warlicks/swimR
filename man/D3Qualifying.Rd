@@ -6,11 +6,11 @@
 \title{NCAA Qualifying Times}
 \format{A data frame with 52 rows and 5 columns:
 \describe{
-\item{event}{}
-\item{gender}{}
-\item{standard}{}
- \item{swim_time}{}
- \item{swim_time2}{}
+ \item{event}{A swimming event contested at NCAA Division III Championships.}
+ \item{gender}{Indicates if the qualifying time is for men or women.}
+ \item{standard}{Indicates if the qualifying time is an Automatic (A) or Provisional (B).}
+  \item{swim_time}{The qualifying time for the given event and standard.}
+  \item{swim_time2}{The qualifying time the given event and standard in seconds.}
 }}
 \source{
 \url{https://swimswam.com/ncaa-releases-division-iii-time-standards/}
@@ -19,8 +19,11 @@
 D3Qualifying
 }
 \description{
-A Dataset containing the qualifying times for the 2017 NCAA Division II 
+A Dataset containing the qualifying times for the 2017 NCAA Division III 
 Swimming Championships.
+}
+\seealso{
+\code{\link{D1Qualifying}} \code{\link{D2Qualifying}}
 }
 \keyword{datasets}
 

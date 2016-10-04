@@ -1,8 +1,15 @@
 cut_times <- function(url, division = 1, yr = NA){
 	require(rvest) # Using require b/c rvest::read_html does not work
 
+	# Set Up slice to deal with D2 swimming 1000
+	if(division == 2){
+		end<-16
+	} else { 
+		end <- 15
+	}
+	
 	# Get HTML Source For Top Times Search ----
-	webpage <- read_html("https://swimswam.com/ncaa-releases-division-iii-time-standards/")
+	webpage <- read_html(url)
 
 	# Extract Table From the Webpage ----
 	web_table <- webpage  %>%
@@ -19,13 +26,13 @@ cut_times <- function(url, division = 1, yr = NA){
 
 	# Clean Up Event Name Function ----
 	event_name <- event_name %>% 
-		dplyr::slice(3:15) %>% 
+		dplyr::slice(3:end) %>% 
 		dplyr::rename(event = X3)
 
-	men_a <- standard_clean(men_a, event_name)
-	men_b <- standard_clean(men_b, event_name)
-	women_a <- standard_clean(women_a, event_name)
-	women_b <- standard_clean(women_b, event_name)
+	men_a <- standard_clean(men_a, event_name, division)
+	men_b <- standard_clean(men_b, event_name, division)
+	women_a <- standard_clean(women_a, event_name, division)
+	women_b <- standard_clean(women_b, event_name, division)
 
 	qualifying_standard <- dplyr::bind_rows(men_a, men_b, women_a, women_b) %>%
 		dplyr::select(event, gender, standard, swim_time, swim_time2)
