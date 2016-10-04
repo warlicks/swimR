@@ -1,7 +1,7 @@
 library(devtools)
 
-source("~/Documents/GitHub/swimR/R/cut_times.R")
-source("~/Documents/GitHub/swimR/R/standard_clean.R")
+source("~/Documents/GitHub/swimR/raw_data/cut_times.R")
+source("~/Documents/GitHub/swimR/raw_data/standard_clean.R")
 
 D1Qualifying <- cut_times('https://swimswam.com/ncaa-releases-2016-2017-division-time-standards/')
 
