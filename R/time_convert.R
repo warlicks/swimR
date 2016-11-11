@@ -3,7 +3,9 @@
 #' An internal function used in \code{\link{data_clean}}
 #'
 #' \code{time_convert} is an internal function used in \code{\link{data_clean}} to convert the athletes time from a character type to a variable type that can be used in calculations.  It utilizes \code{\link[lubridate]{lubridate}} to perform the conversion.  
-
+#'
+#' @keywords internal
+#'
 #' @param data The data frame provided in \code{\link{data_clean}}
 #'
 #' @return The original data frame with an additiona column for the athletes time of class duration.
