@@ -3,3 +3,6 @@
 
 # Ignore Rapp history
 *.Rapp.history
+
+#Ignore R History
+.Rhistory
