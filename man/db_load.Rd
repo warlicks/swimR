@@ -17,7 +17,7 @@ db_load(db_name, data, team)
 Create and/or Load Data into a SQLite Database
 }
 \details{
-\code{db_load} is used to create and load a USA Swimmings Top Times Report into  SQLite database.  The function utilizes \code{\link[DBI]{DBI}} to create the connection to the database, creation of the tables and insertion of the data.
+\code{db_load} is used to create and load a USA Swimmings Top Times Report into  SQLite database.  The function utilizes \code{\link[DBI]{DBI}} create the connection to the database, creation of the tables and insertion of the data.
 
 The function is designed so that each team has its own table.  The team name is provided in the function call.  If the table does not exist it is created and the data is loaded.  If the table does exist the data is appended to the existing table.  The function currently does not check for duplicate entries.
 
