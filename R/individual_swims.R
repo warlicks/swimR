@@ -29,6 +29,7 @@
 #' @param read logical indicating if the downloaded file should be loaded into R's memory.
 #'
 #' @export
+#'
 #' @return If \emph{read = TRUE} a data frame is returned.  In both cases a \emph{.csv} file is created in the given directory.
 #'
 #' @seealso \code{\link[RSelenium]{RSelenium}}
@@ -41,15 +42,15 @@
 individual_swims<-function(Conference, start_date = '2015-08-01', end_date = '2015-05-31', LCM = FALSE, SCM = FALSE, SCY = TRUE, top, downloadPath = getwd(), read = TRUE){
 	require(RSelenium) # Rselenium Provides Tools Fill Out Search Form.
 
-	checkForServer()
+	#checkForServer()
 
 	url<-"http://usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en"
 
-	selserv <- startServer(args = c("-port 4445")) # Star Selenium Server
+	#selserv <- startServer(args = c("-port 4445")) # Star Selenium Server
 
 	fprof <- profile(downloadPath)
 
-	remDr <- remoteDriver(remoteServerAddr = 'localhost', port = 4445, browser = "firefox", extraCapabilities = fprof)
+	remDr <- remoteDriver(remoteServerAddr = 'localhost', port = 4440, browser = "firefox", extraCapabilities = fprof)
 
 	remDr$open(silent = TRUE)
 

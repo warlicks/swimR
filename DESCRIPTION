@@ -14,7 +14,7 @@ LazyData: true
 RoxygenNote: 5.0.1
 Imports: dplyr,
     DBI,
-    RSelenium (== 1.4.5),
+    RSelenium,
     RSQLite,
     rvest,
     lubridate
