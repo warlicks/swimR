@@ -18,17 +18,18 @@
 #'
 #' The function automatically renames the file downloaded to \emph{confernece.csv}.  If a file with the name \emph{confernce.csv} already exists in chosen directory, it will write over the existing file.
 #'
-#' @param Conference a character string.  The name of a Division I conference.
-#' @param start_date a character string.   Defines the begining of the period for the times report. It is entered as a character string in the format 'YYYY-MM-DD'.
-#' @param end_date a character string.   Defines the end of the period for the times report. It is entered as a character string in the format 'YYYY-MM-DD'.
-#' @param LCM logical.  Optional. Should long course meter events be included in the report?  Defaults to FALSE.
-#' @param SCM logical.  Optional. Should short course meter events be included in the report?  Defaults to FALSE.
-#' @param SCY logical.  Optional. Should short course yard events be included in the report?  Defaults to TRUE.
-#' @param top integer. How many swimmers should be returned in each event? Maximum allowed is 500.
-#' @param downloadPath character sting repersenting a file directory where the returned top times report should be saved.  By default it saves the file to the current working directory.
+#' @param conf a character string giving name of a Division I conference.
+#' @param start_date a character string that defines the begining of the period for the times report. It is entered as a character string in the format 'YYYY-MM-DD'.
+#' @param end_date a character string that defines the end of the period for the times report. It is entered as a character string in the format 'YYYY-MM-DD'.
+#' @param lcm logical indication if long course meter events be included in the report?. Defaults to FALSE.
+#' @param scm logical indicating if should short course meter events be included in the report.  Defaults to FALSE.
+#' @param scy logical indicating if short course yard events be included in the report. Defaults to TRUE.
+#' @param top integer indicating how many swimmers should be returned in each event.  Default value is top 100 times, while the maximum allowed is 500.
+#' @param download_path character sting repersenting a file directory where the returned top times report should be saved.  By default it saves the file to the current working directory.
 #' @param read logical indicating if the downloaded file should be loaded into R's memory.
 #'
 #' @export
+#'
 #' @return If \emph{read = TRUE} a data frame is returned.  In both cases a \emph{.csv} file is created in the given directory.
 #'
 #' @seealso \code{\link[RSelenium]{RSelenium}}
@@ -38,18 +39,25 @@
 #' report <- individual_swims('Big Ten', start_date = '2015-09-01', end_date = '2015-10-01', read = FALSE)
 
 
-individual_swims<-function(Conference, start_date = '2015-08-01', end_date = '2015-05-31', LCM = FALSE, SCM = FALSE, SCY = TRUE, top, downloadPath = getwd(), read = TRUE){
+individual_swims<-function(conf, 
+						   start_date = '2015-08-01', 
+						   end_date = '2015-05-31', 
+						   lcm = FALSE, 
+						   scm = FALSE, scy = TRUE, 
+						   top = 100, 
+						   download_path = getwd(), 
+						   read = TRUE){
 	require(RSelenium) # Rselenium Provides Tools Fill Out Search Form.
 
-	checkForServer()
+	#checkForServer()
 
 	url<-"http://usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en"
 
-	selserv <- startServer(args = c("-port 4445")) # Star Selenium Server
+	#selserv <- startServer(args = c("-port 4445")) # Star Selenium Server
 
-	fprof <- profile(downloadPath)
+	fprof <- profile(download_path)
 
-	remDr <- remoteDriver(remoteServerAddr = 'localhost', port = 4445, browser = "firefox", extraCapabilities = fprof)
+	remDr <- remoteDriver(remoteServerAddr = 'localhost', port = 4440, browser = "firefox", extraCapabilities = fprof)
 
 	remDr$open(silent = TRUE)
 
@@ -59,24 +67,24 @@ individual_swims<-function(Conference, start_date = '2015-08-01', end_date = '20
 	time_type$clickElement() #Make Sure Indivual Times are Selected
 
 	# Select Conference
-	conference_select <- key_press(Conference) # Set Up Key Strokes
+	conference_select <- key_press(conf) # Set Up Key Strokes
 
 	conference<-remDr$findElement(using = "id", value = "ctl82_ddConference")
 	conference$sendKeysToElement(conference_select) # Pass Key Storkes
 
 
 	# Select The Courses
-	if(LCM == FALSE){
+	if(lcm == FALSE){
 		lcm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_0")
 		lcm$clickElement()
 	} # Uncheck LCM Button
 
-	if(SCM == FALSE){
+	if(scm == FALSE){
 		scm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_1")
 		scm$clickElement()
 	} # Uncheck SCM Button
 
-	if(SCY == FALSE){
+	if(scy == FALSE){
 		scy <- remDr$findElement(using = "id", value = "ctl82_cblCourses_2")
 		scy$clickElement()
 	} # Uncheck SCY Button
@@ -130,18 +138,23 @@ individual_swims<-function(Conference, start_date = '2015-08-01', end_date = '20
 	remDr$close()
 
 	# File Management ----
-	## If working directory is different from the download path.
+
+	## If working dir is diff from the download path store the current.
 	currentwd <- getwd()
-	setwd(downloadPath)
+	setwd(download_path)
 
-	file <- file.info(dir()) # Data Frame Used to find downloaded file.
+	# Create data frame used to find downloaded file.
+	file <- file.info(dir()) 
 
-	file_name <- row.names(file)[which(file$ctime == max(file$ctime))] # Use create time find name of downloaded file
+	#Use create time find name of downloaded file
+	file_name <- row.names(file)[which(file$ctime == max(file$ctime))] 
 
-	file.rename(file_name, paste(Conference, ".csv", sep = "")) #Give Meaningful Name
+	#Give Meaningful Name
 
+	file.rename(file_name, paste(conf, ".csv", sep = "")) 
+	
 	if(read){
-		data <- read.csv(paste(Conference, ".csv", sep = ""), stringsAsFactors = FALSE)
+		data <- read.csv(paste(conf, ".csv", sep = ""), stringsAsFactors = FALSE)
 		return(data)
 	}
 

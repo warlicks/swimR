@@ -1,0 +1,8 @@
+# Ignore DS_Store
+*.DS_Store
+
+# Ignore Rapp history
+*.Rapp.history
+
+#Ignore R History
+.Rhistory

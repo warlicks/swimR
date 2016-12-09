@@ -8,6 +8,8 @@
 #'
 #' @param Conference character string.  The name of the conference for which the top times report should be run.
 #'
+#' @keywords internal
+#'
 #' @return a list. The number of elements in the list coresponds to the position of the confernce supplied to the function in the group of confernces that start with the same letter.
 #'
 #' @seealso \code{\link[RSelenium]{remoteDriver}} \code{\link{individual_swims}} \code{\link{get_conferences}}

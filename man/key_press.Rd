@@ -23,4 +23,5 @@ The function gathers the list of Confernces from the drop down menu on the \href
 \seealso{
 \code{\link[RSelenium]{remoteDriver}} \code{\link{individual_swims}} \code{\link{get_conferences}}
 }
+\keyword{internal}
 

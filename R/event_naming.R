@@ -2,7 +2,10 @@
 #'
 #' An Internal Function used in \code{\link{data_clean}}
 #'
+#' @keywords internal
+#'
 #' @param data A data frame passed from \code{data_clean}.  
+#'
 
 event_naming <- function(data){
 
