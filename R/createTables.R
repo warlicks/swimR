@@ -23,7 +23,7 @@ create_team <- function(con){
 		)
 	"
 	# Execute the statement
-	if(DBI::dbExistsTable(con, 'TEAM'){
+	if(DBI::dbExistsTable(con, 'TEAM')) {
 		print('Team Table Already Built')
 	} else {
 		create <- DBI::dbSendStatement(con, statement)
@@ -52,7 +52,7 @@ create_conference <- function(con){
 		)
 	"
 	# Execute the statement
-	if(DBI::dbExistsTable(con, 'CONFERENCE'){
+	if(DBI::dbExistsTable(con, 'CONFERENCE')){
 		print('Team Table Already Built')
 	} else {
 		create <- DBI::dbSendStatement(con, statement)
@@ -84,7 +84,7 @@ create_athlete <- function(con){
 		)
 	"
 	# Execute the statement
-	if(DBI::dbExistsTable(con, 'ATHLETE'){
+	if(DBI::dbExistsTable(con, 'ATHLETE')){
 		print('Athlete Table Already Built')
 	} else {
 		create <- DBI::dbSendStatement(con, statement)
@@ -114,7 +114,7 @@ create_meet <- function(con){
 		)
 	"
 	# Execute the statement
-	if(DBI::dbExistsTable(con, 'MEET'){
+	if(DBI::dbExistsTable(con, 'MEET')) {
 		print('Meet Table Already Built')
 	} else {
 		create <- DBI::dbSendStatement(con, statement)
@@ -147,7 +147,7 @@ create_event <- function(con){
 		)
 	"
 	# Execute the statement
-	if(DBI::dbExistsTable(con, 'EVENT'){
+	if(DBI::dbExistsTable(con, 'EVENT')){
 		print('Event Table Already Built')
 	} else {
 		create <- DBI::dbSendStatement(con, statement)
@@ -181,7 +181,7 @@ create_result <- function(con){
 		)
 	"
 	# Execute the statement
-	if(DBI::dbExistsTable(con, 'RESULT'){
+	if(DBI::dbExistsTable(con, 'RESULT')){
 		print('Result Table Already Built')
 	} else {
 		create <- DBI::dbSendStatement(con, statement)
