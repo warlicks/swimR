@@ -14,7 +14,7 @@ standard_clean <- function(data, event_data, division){
 	# Data manipulation
 	data <- dplyr::mutate(data, gender = data[1, ], standard = data[2, ]) %>% 
 		# Create gender and standard columns
-	dplyr::select(swim_time = dplyr:::starts_with("X"), gender, standard) %>%\	# Create Swim Time
+	dplyr::select(swim_time = dplyr:::starts_with("X"), gender, standard) %>%	# Create Swim Time
 	dplyr::slice(3:end) %>% # Select only needed rows by postion
 	dplyr::bind_cols(., event_data) # Add event names as a colum in the data. 
 	
