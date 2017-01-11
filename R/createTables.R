@@ -181,7 +181,11 @@ create_result <- function(con){
 		)
 	"
 	# Execute the statement
+<<<<<<< HEAD
 	if(DBI::dbExistsTable(con, 'RESULT')){
+=======
+	if(DBI::dbExistsTable(con, 'RESULT'){
+>>>>>>> af329024054e425bfb178e71276439c72a45b0dc
 		print('Result Table Already Built')
 	} else {
 		create <- DBI::dbSendStatement(con, statement)
