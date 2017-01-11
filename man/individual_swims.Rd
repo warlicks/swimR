@@ -4,26 +4,26 @@
 \alias{individual_swims}
 \title{Retrive Report From USA Swimming's NCAA DI Top Times Report}
 \usage{
-individual_swims(Conference, start_date = "2015-08-01",
-  end_date = "2015-05-31", LCM = FALSE, SCM = FALSE, SCY = TRUE, top,
-  downloadPath = getwd(), read = TRUE)
+individual_swims(conf, start_date = "2015-08-01", end_date = "2015-05-31",
+  lcm = FALSE, scm = FALSE, scy = TRUE, top = 100,
+  download_path = getwd(), read = TRUE)
 }
 \arguments{
-\item{Conference}{a character string.  The name of a Division I conference.}
+\item{conf}{a character string giving name of a Division I conference.}
 
-\item{start_date}{a character string.   Defines the begining of the period for the times report. It is entered as a character string in the format 'YYYY-MM-DD'.}
+\item{start_date}{a character string that defines the begining of the period for the times report. It is entered as a character string in the format 'YYYY-MM-DD'.}
 
-\item{end_date}{a character string.   Defines the end of the period for the times report. It is entered as a character string in the format 'YYYY-MM-DD'.}
+\item{end_date}{a character string that defines the end of the period for the times report. It is entered as a character string in the format 'YYYY-MM-DD'.}
 
-\item{LCM}{logical.  Optional. Should long course meter events be included in the report?  Defaults to FALSE.}
+\item{lcm}{logical indication if long course meter events be included in the report?. Defaults to FALSE.}
 
-\item{SCM}{logical.  Optional. Should short course meter events be included in the report?  Defaults to FALSE.}
+\item{scm}{logical indicating if should short course meter events be included in the report.  Defaults to FALSE.}
 
-\item{SCY}{logical.  Optional. Should short course yard events be included in the report?  Defaults to TRUE.}
+\item{scy}{logical indicating if short course yard events be included in the report. Defaults to TRUE.}
 
-\item{top}{integer. How many swimmers should be returned in each event? Maximum allowed is 500.}
+\item{top}{integer indicating how many swimmers should be returned in each event.  Default value is top 100 times, while the maximum allowed is 500.}
 
-\item{downloadPath}{character sting repersenting a file directory where the returned top times report should be saved.  By default it saves the file to the current working directory.}
+\item{download_path}{character sting repersenting a file directory where the returned top times report should be saved.  By default it saves the file to the current working directory.}
 
 \item{read}{logical indicating if the downloaded file should be loaded into R's memory.}
 }
