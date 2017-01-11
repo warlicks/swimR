@@ -19,19 +19,28 @@ D3Qualifying <- cut_times('https://swimswam.com/ncaa-releases-division-iii-time-
 
 # Add Event ID Column To Qualifying Data ----
 D1Qualifying <- D1Qualifying %>% 
+	mutate(event = ifelse(D1Qualifying$event %in% c('200 IM', '400 IM'), 
+		                  D1Qualifying$event, 
+		                  toupper(D1Qualifying$event)))
 	inner_join(., event_id, by = c('event' = 'event')) %>%
 	select(event_id, event, gender, standard, swim_time, swim_time2)
 
 D2Qualifying <- D2Qualifying %>% 
+	#mutate(event = ifelse(D2Qualifying$event %in% c('200 IM', '400 IM'), 
+	#	                  D2Qualifying$event, 
+	#	                  tolower(D2Qualifying$event))) %>%
 	inner_join(., event_id, by = c('event' = 'event')) %>%
 	select(event_id, event, gender, standard, swim_time, swim_time2)
 
 D3Qualifying <- D3Qualifying %>% 
+	#mutate(event = ifelse(D3Qualifying$event %in% c('200 IM', '400 IM'), 
+	#	                  D3Qualifying$event, 
+	#	                  tolower(D3Qualifying$event))) %>%
 	inner_join(., event_id, by = c('event' = 'event')) %>%
 	select(event_id, event, gender, standard, swim_time, swim_time2)
 
 setwd("~/Documents/GitHub/swimR")
 
-use_data(D1Qualifying)
-use_data(D2Qualifying)
-use_data(D3Qualifying)
+use_data(D1Qualifying, overwrite = TRUE)
+use_data(D2Qualifying, overwrite = TRUE)
+use_data(D3Qualifying, overwrite = TRUE)
