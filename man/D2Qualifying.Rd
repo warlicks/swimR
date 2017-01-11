@@ -6,6 +6,7 @@
 \title{NCAA Qualifying Times}
 \format{A data frame with 56 rows and 5 columns:
 \describe{
+  \item{event_id}{A numeric id so that standars can be easily joined to top time report.}
  \item{event}{A swimming event contested at NCAA Division II Championships. The 1000 Yard Free is contested at NCAA Division II Championships, but not at Division I or Division III}
  \item{gender}{Indicates if the qualifying time is for men or women.}
  \item{standard}{Indicates if the qualifying time is an Automatic (A) or Provisional (B).}

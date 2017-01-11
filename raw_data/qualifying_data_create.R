@@ -41,6 +41,6 @@ D3Qualifying <- D3Qualifying %>%
 
 setwd("~/Documents/GitHub/swimR")
 
-use_data(D1Qualifying)
-use_data(D2Qualifying)
-use_data(D3Qualifying)
+use_data(D1Qualifying, overwrite = TRUE)
+use_data(D2Qualifying, overwrite = TRUE)
+use_data(D3Qualifying, overwrite = TRUE)
