@@ -68,7 +68,7 @@ insert_athlete <- function(con, data){
 	require(dplyr)
 
 	# Get apprpriate team_id for each record
-	team_id_query <- "Select id From Team Where Team_Code = a:"
+	team_id_query <- "Select id From Team Where Team_Code = :a"
 	team_id <- DBI::dbSendQuery(con, team_id_query, list(a = data$team_code))
 	team_id_dt <- DBI::dbFetch(team_id)
 	
@@ -78,7 +78,29 @@ insert_athlete <- function(con, data){
 		Values(:a, :b, :c, :d, :e)
 	"
 	## Set Up Records to Run
-	records = list(a = data$athlete_id, b = team_id_dt$ID, c = data$athlete_name, d = data$Gender, e = data$Birthdate)
+	records = list(a = data$athlete_id, b = team_id_dt$ID, c = data$full_name_computed, d = data$gender, e = data$birth_date)
+	
+	## Execute query
+	DBI::dbExecute(con, insert_statement, params = records)
+}
+
+#' Insert Athlete Data into database.
+#' An Internal function.
+#' @param con a
+#'
+#' @param data
+#'
+#' @keywords internal
+
+insert_meet <- function(con, data){
+	
+	# Set SQL Insert Statement
+	insert_statement <- "
+	    INSERT OR IGNORE INTO Meet (Meet_Name, Meet_Date)
+		Values(:a, :b)
+	"
+	## Set Up Records to Run
+	records = list(a = data$meet_name, b = data$swim_date)
 	
 	## Execute query
 	DBI::dbExecute(con, insert_statement, params = records)

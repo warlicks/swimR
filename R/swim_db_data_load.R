@@ -15,6 +15,11 @@ swim_db_data_load <- function(con, data, conference_name){
 	t <- insert_team(con, data, conference_name)
 	print(t)
 
+	a <- insert_athlete(con, data)
+	print(a)
+
+	m <- insert_meet(con, data)
+	print(m)
 
 
 
