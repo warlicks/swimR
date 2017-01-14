@@ -13,6 +13,8 @@
 
 #' @param con A character string providing the name of a SQLiteConnection to the desired database.
 #'
+#' @return The function prints a message to the terminal indicating if the table was correctly created.
+#'
 #' @export
 
 swim_db_tables <- function(con){

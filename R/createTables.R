@@ -53,7 +53,7 @@ create_conference <- function(con){
 	statement <- "
 		CREATE TABLE CONFERENCE(
 			ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
-			NAME VARCHAR(100)
+			NAME VARCHAR(100) UNIQUE
 		)
 	"
 	# Execute the statement
