@@ -21,6 +21,9 @@ swim_db_data_load <- function(con, data, conference_name){
 	m <- insert_meet(con, data)
 	print(m)
 
+	r <- insert_result(con, data)
+	print(r)
+
 
 
 }

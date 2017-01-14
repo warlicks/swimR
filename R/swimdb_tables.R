@@ -25,5 +25,6 @@ swim_db_tables <- function(con){
 	create_athlete(con)
 	create_meet(con)
 	create_event(con)
+	insert_event(con)
 	create_result(con)
 }

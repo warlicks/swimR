@@ -152,11 +152,8 @@ create_event <- function(con){
 	# Define the Create table statement 
 	statement <- "
 		CREATE TABLE EVENT(
-			ID INTEGER,
-			EVENT CHAR(15) NOT NULL,
-			GENDER CHAR(2) NOT NULL,
-			STANDARD CHAR(18) NOT NULL,
-			TIME NUMERIC NOT NULL
+			ID INTEGER Not Null UNIQUE,
+			EVENT CHAR(15) NOT NULL UNIQUE
 		)
 	"
 	# Execute the statement
@@ -190,7 +187,7 @@ create_result <- function(con){
 			ID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE,
 			MEET_ID NOT NULL, 
 			ATHLETE_ID VARCHAR(15) NOT NULL,
-			EVENT CHAR(15) NOT NULL,
+			EVENT_ID INTEGER NOT NULL,
 			SWIM_TIME_TEXT VARCHAR(10) NOT NULL,
 			SWIM_TIME_VALUE NUMERIC NOT NULL	
 		)

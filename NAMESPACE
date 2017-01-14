@@ -3,4 +3,5 @@
 export(clean_swim)
 export(get_conferences)
 export(individual_swims)
+export(swim_db_data_load)
 export(swim_db_tables)

@@ -105,3 +105,84 @@ insert_meet <- function(con, data){
 	## Execute query
 	DBI::dbExecute(con, insert_statement, params = records)
 }
+
+#' Insert Meet Result Data into database.
+#' An Internal function.
+#' @param con a
+#'
+#' @param data
+#'
+#' @keywords internal
+#'
+insert_result <- function(con, data){
+	# Get Meet ID From Meet Table.
+	meet_id_query <- "Select ID From Meet Where meet_name = :a"
+	meet_id <- DBI::dbSendQuery(con, meet_id_query, list(a = data$meet_name))
+	meet_id_dt <- DBI::dbFetch(meet_id)
+
+	# Set Up SQL Insert Statement
+	insert_statement <- "
+	INSERT OR IGNORE INTO RESULT (
+		Meet_ID,
+		Athlete_ID,
+		Event_ID,
+		SWIM_TIME_TEXT,
+		SWIM_TIME_VALUE
+	)
+
+	Values(:a, :b, :c, :d, :e)"
+
+	# Set Up Records to Run
+	records <- list(a = meet_id_dt$ID, b = data$athlete_id, c = data$event_id, d = data$swim_time, e = data$swim_time2)
+
+	# Execute Insert
+	DBI::dbExecute(con, insert_statement, params = records)
+}
+
+#' Insert Event Data into database.
+#' An Internal function.
+#' @param con a
+#'
+#' @param data
+#'
+#' @keywords internal
+#'
+insert_event <- function(con){
+	#Get Event ID and event names from D2qualifying times. 
+	event_ids <- D2Qualifying
+	event_ids <- dplyr::select(event_ids, event_id, event) 
+	event_ids <- dplyr::distinct(event_ids)
+	
+	# Set Up SQL Insert Statement
+	insert_statement <- "
+	INSERT OR IGNORE INTO Event (
+		id,
+		event
+	)
+	Values(:a, :b)"
+
+	# Set Up Records to Run
+	records <- list(a = event_ids$event_id, b = event_ids$event)
+
+	# Execute Insert
+	records_inserted <- DBI::dbExecute(con, insert_statement, params = records)
+	if (records_inserted == 14) {
+		print('Event Table Correctly Populated')
+	} else{
+		print("Check The Contents of Event Table")
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
