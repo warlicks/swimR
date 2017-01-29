@@ -39,7 +39,7 @@ insert_conference <- function(con, conference_name){
 
 insert_team <- function(con, data, conference_name){
 	# Load needed package
-	require(dplyr)
+	require(dplyr, quietly = TRUE)
 
 	conference_query <- "Select id From Conference Where Name = :a"
 	conf_id <- DBI::dbSendQuery(con, conference_query, list(a = conference_name))
@@ -64,6 +64,7 @@ insert_team <- function(con, data, conference_name){
 #' @keywords internal
 
 insert_athlete <- function(con, data){
+
 	# Load needed package
 	require(dplyr)
 
@@ -78,13 +79,17 @@ insert_athlete <- function(con, data){
 		Values(:a, :b, :c, :d, :e)
 	"
 	## Set Up Records to Run
-	records = list(a = data$athlete_id, b = team_id_dt$ID, c = data$full_name_computed, d = data$gender, e = data$birth_date)
+	records = list(a = data$athlete_id, 
+		           b = team_id_dt$ID, 
+		           c = data$full_name_computed, 
+		           d = data$gender, 
+		           e = data$birth_date)
 	
 	## Execute query
 	DBI::dbExecute(con, insert_statement, params = records)
 }
 
-#' Insert Athlete Data into database.
+#' Insert Meet Data into database.
 #' An Internal function.
 #' @param con a
 #'
@@ -104,9 +109,11 @@ insert_meet <- function(con, data){
 	
 	## Execute query
 	DBI::dbExecute(con, insert_statement, params = records)
+
+	
 }
 
-#' Insert Meet Result Data into database.
+#' Insert Result Data into database.
 #' An Internal function.
 #' @param con a
 #'
@@ -133,15 +140,20 @@ insert_result <- function(con, data){
 	Values(:a, :b, :c, :d, :e)"
 
 	# Set Up Records to Run
-	records <- list(a = meet_id_dt$ID, b = data$athlete_id, c = data$event_id, d = data$swim_time, e = data$swim_time2)
+	records <- list(a = meet_id_dt$ID, 
+		            b = data$athlete_id, 
+		            c = data$event_id, 
+		            d = data$swim_time, 
+		            e = data$swim_time2)
 
 	# Execute Insert
-	DBI::dbExecute(con, insert_statement, params = records)
+	result_insert <- DBI::dbExecute(con, insert_statement, params = records)
+	return(result_insert)
 }
 
 #' Insert Event Data into database.
 #' An Internal function.
-#' @param con a
+#' @param con a database connection of class
 #'
 #' @param data
 #'
@@ -171,11 +183,52 @@ insert_event <- function(con){
 	} else{
 		print("Check The Contents of Event Table")
 	}
+
 }
 
 
+#' Insert Event Data into database.  
+#' An Internal function.
+#' @param con a database connection of class
+#'
+#' @param data
+#'
+#' @keywords internal
+#'
 
+insert_qualifying <- function(con){
+	# Set Up SQL statement
+	insert_statement <- "
+	Insert or Ignore Into Qualifying (
+		EVENT_ID,
+		GENDER,
+		STANDARD,
+		Q_TIME_TEXT,
+		Q_TIME_VALUE
+	)
+	Values(:a, :b, :c, :d, :e)	
+	"
 
+	# Set up records to run
+	
+	## Load data from within package
+	q_data <- D1Qualifying
+
+	records <- list(a = q_data$event_id, 
+		            b = substr(q_data$gender, 1, 1), 
+		            c = substr(q_data$standard, 1, 1), 
+		            d = q_data$swim_time, 
+		            e = q_data$swim_time2)
+
+	# Execute Insert
+	records_inserted <- DBI::dbExecute(con, insert_statement, params = records)
+	if (records_inserted == 53) {
+		print('Qualifying Table Correctly Populated')
+	} else{
+		print("Check The Contents of Qualifying Table")
+	}
+
+}
 
 
 

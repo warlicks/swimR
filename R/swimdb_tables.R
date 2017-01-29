@@ -20,11 +20,31 @@
 swim_db_tables <- function(con){
 
 	# Create the Tables
+	
+	## Conference Table
 	create_conference(con)
+	
+	## Team Table
 	create_team(con)
+
+	## Athlete Table
 	create_athlete(con)
+
+	## Meet Table 
 	create_meet(con)
+
+	## Create and Load Event Table.  
+	## We populate this table when we build it since ith is the same data every time. 
 	create_event(con)
-	insert_event(con)
+	e <- insert_event(con)
+	print(e)
+	
+	## Create and load qualifying time table.
+	## We populate the qualifying when it is built since it is same data.
+	create_qualifying(con)
+	insert_qualifying(con)
+
+	
+	#Create result table
 	create_result(con)
 }

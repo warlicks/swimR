@@ -171,6 +171,39 @@ create_event <- function(con){
 	}
 }
 
+#' Code to create each table in the database. 
+#'
+#' @param con is a database connection object of class \link[DBI]{
+#' DBIConnection-class}
+#'
+#' @keywords internal
+#'
+
+create_qualifying <- function(con){
+	statement <- "
+		Create Table Qualifying(
+			EVENT_ID Integer NOT NULL,
+			GENDER CHAR(2) NOT NULL,
+			STANDARD CHAR(2) NOT NULL,
+			Q_TIME_TEXT VARCHAR(10) NOT NULL,
+			Q_TIME_VALUE NUMERIC NOT NULL 
+		)
+	"
+	# Execute Statement
+	if(DBI::dbExistsTable(con, 'Qualifying')){
+		print('Qualifying Table Already Built')
+	} else {
+		create <- DBI::dbExecute(con, statement)
+
+		# Check That Create Table worked
+		if(DBI::dbExistsTable(con, 'RESULT') == FALSE) {
+			warning("Qualifying Table Was Not Created")
+		} else {
+			print("Qualifying Table Was Built")
+		}
+	}
+}
+
 
 #' Code to create each table in the database. 
 #'
