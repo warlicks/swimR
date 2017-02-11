@@ -6,3 +6,8 @@ The package provides a wraper around [`RSelenium`](http://ropensci.github.io/RSe
 ## Installing swimR
 swimR is currentl under active development and still has some issues getting the Selenium Server to run everytime.  If this dosn't scare you feel free to install.
 `devtools::install_github('https://github.com/warlicks/swimming_app', ref = 'master')`
+
+## To Do  
+* [ ] Document database structure & update other relevent documentation.
+* [ ] Create function to start selenium server.  
+* [ ] Create function to start 
