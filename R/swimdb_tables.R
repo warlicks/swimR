@@ -19,6 +19,10 @@
 
 swim_db_tables <- function(con){
 
+	# Connect to Database
+	#driver <- RSQLite::SQLite()
+	#con    <- DBI::dbConnect(driver, "swim_test6.sqlite")
+	
 	# Create the Tables
 	
 	## Conference Table
@@ -36,8 +40,6 @@ swim_db_tables <- function(con){
 	## Create and Load Event Table.  
 	## We populate this table when we build it since ith is the same data every time. 
 	create_event(con)
-	e <- insert_event(con)
-	print(e)
 	
 	## Create and load qualifying time table.
 	## We populate the qualifying when it is built since it is same data.
