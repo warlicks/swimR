@@ -39,13 +39,17 @@ swim_db_tables <- function(con){
 
 	## Create and Load Event Table.  
 	## We populate this table when we build it since ith is the same data every time. 
-	create_event(con)
+	event <- create_event(con)
+	if (event == TRUE){
+		insert_event(con)	
+	}	
 	
 	## Create and load qualifying time table.
 	## We populate the qualifying when it is built since it is same data.
-	create_qualifying(con)
-	insert_qualifying(con)
-
+	qualifying <- create_qualifying(con)
+	if(qualifying == TRUE){
+		insert_qualifying(con)
+	}
 	
 	#Create result table
 	create_result(con)
