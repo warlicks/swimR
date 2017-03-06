@@ -159,6 +159,7 @@ create_event <- function(con){
 	# Execute the statement
 	if(DBI::dbExistsTable(con, 'EVENT')){
 		print('Event Table Already Built')
+		return(FALSE)
 	} else {
 		create <- DBI::dbExecute(con, statement)
 		
@@ -167,6 +168,7 @@ create_event <- function(con){
 			warning("Event Table Was Not Created")
 		} else {
 			print("EVENT Table Was Built")
+			return(TRUE)
 		}
 	}
 }
@@ -186,20 +188,23 @@ create_qualifying <- function(con){
 			GENDER CHAR(2) NOT NULL,
 			STANDARD CHAR(2) NOT NULL,
 			Q_TIME_TEXT VARCHAR(10) NOT NULL,
-			Q_TIME_VALUE NUMERIC NOT NULL 
+			Q_TIME_VALUE NUMERIC NOT NULL,
+			UNIQUE(EVENT_ID, GENDER, STANDARD)
 		)
 	"
 	# Execute Statement
 	if(DBI::dbExistsTable(con, 'Qualifying')){
 		print('Qualifying Table Already Built')
+		return(FALSE)
 	} else {
 		create <- DBI::dbExecute(con, statement)
 
 		# Check That Create Table worked
-		if(DBI::dbExistsTable(con, 'RESULT') == FALSE) {
+		if(DBI::dbExistsTable(con, 'Qualifying') == FALSE) {
 			warning("Qualifying Table Was Not Created")
 		} else {
 			print("Qualifying Table Was Built")
+			return(TRUE)
 		}
 	}
 }
