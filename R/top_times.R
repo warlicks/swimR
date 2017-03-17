@@ -1,170 +1,89 @@
-#' Prepare SQL Query
+#' Query Database for Event Rankings
 #'
-#' The function prepares a SQL query based on the parameters provided.  
+#' Extract Top Times
 #'
-#' @param conference a character vector with the name of an NCAA swimming conference.  If not provided the results include all conferences.  
-#' @param team_name A character vector with the name of an NCAA swimming conference.  If not provided the results include all teams  
-#' @param team_name a character vector with the team code of an NCAA swimming team  If not provided the results include all teams  
-#' @param invidivdual a character vector with the name or athlete id of a swimmier.  If not provided the results include all swimmers.  The athlete id follows the USA Swimming standard.
-#' @param event a character vector with the name of swimming envent.  If not provided the results include all events.  
+#' \code{report_top_times} queries a SQL database to produce a ranking of swimmers in the specified events.  The function is flexiable and can rank swimmers across all of Division 1, within a specific conference or within a team.  It can also produce a ranking of an individual swimmer's resutls.
 #'
-#' @keyword internal
-#'  
+#' @importFrom magrittr %>%
+#'
+#' @param con a database connection.
+#' @param conference a character vector with the name of an NCAA swimming conference.  If not provided the output include all conferences.
+#' @param team_name A character vector with the name of an NCAA swimming conference.  If not provided the output include all teams.
+#' @param team_code a character vector with the team code of an NCAA swimming team  If not provided the output include all teams.
+#' @param gender a character vector.  Indicates the output should include men, women or both.  Defaults to "Both".  Other options are "M" for men and "F" for women.
+#' @param athlete a character vector with the name or athlete id of a swimmier.  If not provided the results include all swimmers.  The athlete id follows the USA Swimming standard.
+#' @param event a character vector with the name of swimming envent.  If not provided the results include all events.
+#' @param multiple_results a boolean indicator that determines if multiple results for the same athlete in a single event should be included in the output.
+#' @param top an integer indicating how many results to return per event.
+#'
+#' @return a data frame of ranked swimming results.
+#'
+#' @export
 
-query_prep <- function(conference = NULL, 
-					  team_name = NULL,
-					  team_code = NULL, 
-					  individual = NULL, 
-					  event = 'All') 
-{
-	# Set Up Basic Query Structure
-	top_time_query <- '
-	Select
-		ATHLETE_NAME,
-		TEAM_NAME,
-		TEAM_CODE,
-		E.NAME,
-		"EVENT",
-		SWIM_TIME_TEXT,
-		SWIM_TIME_VALUE
 
-	FROM RESULT A
-		INNER JOIN ATHLETE B ON A.Athlete_ID = B.ID
-		INNER JOIN EVENT C ON A.EVENT_ID = C.ID
-		INNER JOIN TEAM D ON B.TEAM_ID = D.ID
-		INNER JOIN CONFERENCE E ON D.CONFERENCE_ID = E.ID
+report_top_times <- function(con,
+							conference = NULL,
+							team_name = NULL,
+							team_code = NULL,
+							gender = 'Both',
+							athlete = NULL,
+							event = 'All',
+							multiple_results = TRUE,
+							top = 3){
+	# Prepare Query
+	prepared_query <- query_prep(conference,
+								team_name,
+								team_code,
+								gender,
+								athlete,
+								event)
+	print(prepared_query)
 
-	WHERE
-		CONFERENCE_NAME
-		TEAM_FILLER
-		CODE_FILLER
-		ATHELTE_FILLER
-		EVENT_FILLER
-	'
+	# Execute Query
+	query_resutls <- DBI::dbSendQuery(con, prepared_query)
 
-	# Update query based on arguments
-	
-	## Conference Argument
-	if(is.null(conference)){
-		prepared_query <- sub('CONFERENCE_NAME', "", top_time_query)
-	} else {
-		conf_string <- paste("E.NAME IN ('", 
-							 paste(conference, collapse = "', '"), 
-							 "')", 
-							sep = "")
+	## Fetch Results
+	top_times_df <- DBI::dbFetch(query_resutls)
+	DBI::dbClearResult(query_resutls)
 
-		prepared_query <- sub('CONFERENCE_NAME', conf_string, top_time_query)
+	## Prepare Group By
+	aggregate_groups <- c('EVENT')
+
+
+	if(!is.null(conference)){
+		aggregate_groups <- append(aggregate_groups, 'CONFERENCE')
 	}
-	
-	## Check that both team name and team code aren't populated
-	if(is.null(team_name) == FALSE & is.null(team_code) == FALSE){
-		stop('Both team_name and team_code are populated.  Pick only 1')
+	if(!is.null(team_name)){
+		aggregate_groups <- append(aggregate_groups, 'TEAM_NAME')
 	}
-	## Team name argument
-	if(is.null(team_name)){
-		prepared_query <- sub('TEAM_FILLER', "", prepared_query)
-	
-	} else {
-		team_string <- paste("AND TEAM_NAME IN ('",
-				            paste(team_name, collapse = "', '"),
-				            "')",
-						    sep = "")
-
-		prepared_query <- sub('TEAM_FILLER', team_string, prepared_query)
+	if(!is.null(team_code)){
+		aggregate_groups <- append(aggregate_groups, 'TEAM_NAME')
 	}
-	
-	## Team code argument
-	if(is.null(team_code)){
-		prepared_query <- sub('CODE_FILLER', "", prepared_query)
-
-	} else {
-		team_string2 <- paste("AND TEAM_CODE IN ('",
-				            paste(team_code, collapse = "', '"),
-				            "')",
-						    sep = "")
-
-		prepared_query <- sub('CODE_FILLER', team_string2, prepared_query)
+	if(gender == 'Both'){
+		aggregate_groups <- append(aggregate_groups, 'GENDER')
+	}
+	if(!is.null(athlete)){
+		aggregate_groups <- append(aggregate_groups, 'ATHLETE_NAME')
 	}
 
-	## Individual Swimmers
-	if(is.null(individual)){
-		prepared_query <- sub('ATHELTE_FILLER', "", prepared_query)	
-	
-	} else {
-		### Check for names & IDS
-		names <- subset(individual, 
-						grepl('[a-z]+,\\s[a-z]+', 
-							individual, 
-							ignore.case = TRUE) == TRUE
+	# Select each athletes top time if we only want 1 entry per athlete.
+	if(multiple_results == FALSE){
+		#top_times_df <- top_times_df %>%
+		top_times_df <- dplyr::group_by(top_times_df, ATHLETE_NAME, EVENT)
+		top_times_df <- dplyr::mutate(top_times_df,
+							ATHLETE_RANK = dense_rank(SWIM_TIME_VALUE)
+						)
+		top_times_df <- dplyr::filter(top_times_df, ATHLETE_RANK == 1)
+		top_times_df <- dplyr::ungroup(top_times_df)
+	}
+
+	#top_times_df <- top_times_df %>%
+	top_times_df <- dplyr::group_by_(top_times_df, .dots = aggregate_groups)
+	top_times_df <- dplyr::mutate(top_times_df,
+						RANK = dense_rank(SWIM_TIME_VALUE)
 					)
-		id <- subset(individual, 
-					grepl('[a-z]+,\\s[a-z]+', 
-						individual, 
-						ignore.case = TRUE) == FALSE
-					)
-		print(names)
-		print(id)
-		
-		### Prepare Where Clasue
-		if(length(names) >= 1 & length(id) >= 1){
-			athlete_string <- paste("AND ATHLETE_NAME In ('",
-			 						paste(names, collapse = "', '"), 
-			 						"')",
-									" OR ATHLETE_CODE In('",
-									paste(id, collapse = "', '"), 
-									"')",
-								sep = "")
+	top_times_df <- dplyr::filter(top_times_df, RANK <= top)
 
-			prepared_query <- sub('ATHELTE_FILLER', 
-								  athlete_string, 
-								  prepared_query)	
-		
-		} else if(length(names) >= 1 & length(id) < 1){
-			athlete_string <- paste("AND ATHLETE_NAME In ('",
-			 						paste(names, collapse = "', '"), 
-			 						"')",
-								sep = "")
-			prepared_query <- sub('ATHELTE_FILLER', 
-								   athlete_string, 
-								   prepared_query)	
 
-		} else if(length(names) < 1 & length(id) >= 1){
-			athlete_string <- paste("AND ATHLETE_ID In ('",
-			 						paste(names, collapse = "', '"), 
-			 						"')",
-								sep = "")
-			prepared_query <- sub('ATHELTE_FILLER', 
-								   athlete_string, 
-								   prepared_query)	
-		}
-	}
-
-	## Events
-	if (event == 'All') {
-		prepared_query <- sub('EVENT_FILLER', "", prepared_query)
-
-	} else {
-	### Prepare Events so they match event names in the DB
-		event2 <- c()
-		for (i in event) {
-			m <- match.arg(i, unique(D2Qualifying$event))
-			event2 <- append(event2, m)
-		}
-
-		event_string <- paste('AND EVENT IN (', 
-							  "'", 
-							  paste(event2, collapse = "', '"), 
-							  "')'", 
-					 sep = "")
-
-		prepared_query <- sub('EVENT_FILLER', event_string, prepared_query)
-	}
-
-	## Final Query Prep
-	prepared_query <- sub('WHERE\\s+ AND', "WHERE", prepared_query)
-
-	return(prepared_query)
+	return(top_times_df)
 }
-
-
-
