@@ -6,3 +6,4 @@
 
 #Ignore R History
 .Rhistory
+.Rproj.user
