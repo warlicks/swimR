@@ -48,7 +48,7 @@ clean_swim <- function(data){
 	data <- time_convert(data)
 
 	# Convert dates in swim date to a format recognizeable by SQLite. 
-	data <- clean_dates(data)
+	data <- clean_swim_date(data)
 
 	return(data)
 }
