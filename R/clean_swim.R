@@ -23,7 +23,9 @@
 clean_swim <- function(data){
 
 	# Select only needed data ----
-	data <- dplyr::select(data, meet_name, swim_date, team_short_name, team_code, gender, birth_date, full_name_computed, full_desc, event_id, swim_time, standard_name)
+	data <- dplyr::select(data, meet_name, swim_date, team_short_name, 
+						  team_code, gender, birth_date, full_name_computed, 
+						  full_desc, event_id, swim_time, standard_name)
 
 	## Error Checking
 	if(ncol(data) != 11){
@@ -31,9 +33,22 @@ clean_swim <- function(data){
 		stop()
 	}
 
+	# Check that Gender was not read as a logical value.
+	## When there are only women in the results, R reads "F" in as FALSE.  
+	## When loaded to the DB these results end up as a "0".  
+
+	if (class(data$gender) == "logical"){
+		data <- dplyr::mutate(data, gender = as.character(substr(gender, 1, 1)))
+	}
+
 	# Create Unique ID for each athlete ----
 	data <- id_create(data)
 
 	# Convert time variable to a format that can be used for calculations ----
 	data <- time_convert(data)
+
+	# Convert dates in swim date to a format recognizeable by SQLite. 
+	data <- clean_swim_date(data)
+
+	return(data)
 }
