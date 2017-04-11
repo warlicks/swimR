@@ -23,12 +23,13 @@ key_press <- function(Conference){
 	first_letter <- substr(Conference, 1, 1) # Get First Letter of Conf Name
 
 	# Get HTML Source For Top Times Search ----
-	time_search <- read_html('http://www.usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en')
+	time_search <- read_html('https://legacy.usaswimming.org/DesktopDefault.aspx?TabId=2979')
 
 	# Parse HTML ----
-	conference_list <- time_search %>% 
-		html_nodes("select") %>% 
-		.[1] %>% 
+	conference_list <- 	 time_search %>% 
+		html_node('body') %>% 
+		html_node('form') %>% 
+		html_node('select') %>% 
 		html_children() %>% 
 		html_text() %>%
 		as.data.frame()
