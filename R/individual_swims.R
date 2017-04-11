@@ -39,7 +39,7 @@
 #' report <- individual_swims('Big Ten', start_date = '2015-09-01', end_date = '2015-10-01', read = FALSE)
 
 
-individual_swims<-function(conf, 
+individual_swims <- function(conf, 
 						   start_date = '2015-08-01', 
 						   end_date = '2015-05-31', 
 						   lcm = FALSE, 
@@ -51,7 +51,7 @@ individual_swims<-function(conf,
 
 	#checkForServer()
 
-	url<-"http://usaswimming.org/DesktopDefault.aspx?TabId=1971&Alias=Rainbow&Lang=en"
+	url <- 'https://legacy.usaswimming.org/DesktopDefault.aspx?TabId=2979'
 
 	#selserv <- startServer(args = c("-port 4445")) # Star Selenium Server
 
@@ -63,78 +63,78 @@ individual_swims<-function(conf,
 
 	remDr$navigate(url)
 
-	time_type <- remDr$findElement(using = "id", value = "ctl82_rbIndividual")
+	time_type <- remDr$findElement(using = "id", value = "ctl02_rbIndividual")
 	time_type$clickElement() #Make Sure Indivual Times are Selected
 
 	# Select Conference
 	conference_select <- key_press(conf) # Set Up Key Strokes
 
-	conference<-remDr$findElement(using = "id", value = "ctl82_ddConference")
+	conference<-remDr$findElement(using = "id", value = "ctl02_ddConference")
 	conference$sendKeysToElement(conference_select) # Pass Key Storkes
 
 
 	# Select The Courses
 	if(lcm == FALSE){
-		lcm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_0")
+		lcm<-remDr$findElement(using = "id", value = "ctl02_cblCourses_0")
 		lcm$clickElement()
 	} # Uncheck LCM Button
 
 	if(scm == FALSE){
-		scm<-remDr$findElement(using = "id", value = "ctl82_cblCourses_1")
+		scm<-remDr$findElement(using = "id", value = "ctl02_cblCourses_1")
 		scm$clickElement()
 	} # Uncheck SCM Button
 
 	if(scy == FALSE){
-		scy <- remDr$findElement(using = "id", value = "ctl82_cblCourses_2")
+		scy <- remDr$findElement(using = "id", value = "ctl02_cblCourses_2")
 		scy$clickElement()
 	} # Uncheck SCY Button
 
 	# Set Date Range ----
-	date_button <- remDr$findElement(using = "id", value = "ctl82_rbDateRange")
+	date_button <- remDr$findElement(using = "id", value = "ctl02_rbDateRange")
 	date_button$clickElement()
 
 	## Start Date
-	start_dateBox <- remDr$findElement(using = "id", value = "ctl00_ctl82_ucStartDate_radTheDate_dateInput")
+	start_dateBox <- remDr$findElement(using = "id", value = "ctl00_ctl02_ucStartDate_radTheDate_dateInput")
 	start_date <- date_parse(start_date)
 	start_dateBox$sendKeysToElement(start_date)
 
 	## End Date
-	end_dateBox <- remDr$findElement(using = "id", value = "ctl00_ctl82_ucEndDate_radTheDate_dateInput")
+	end_dateBox <- remDr$findElement(using = "id", value = "ctl00_ctl02_ucEndDate_radTheDate_dateInput")
 	end_date <- date_parse(end_date)
 	end_dateBox$sendKeysToElement(end_date)
 
 	# Select How Many Times To Display ----
 	## Error Check
 	if(top > 500){
-		warning("Can Not Excede Top 500 Times")
+		warning("Cannot Excede Top 500 Times")
 		stop() # Create Warning and Stop if we excede USA Swimmings Max Value
 	}
 
 	## Select top number of time.
-	show_top <- remDr$findElement(using = "id", value = "ctl82_txtShowTopX")
+	show_top <- remDr$findElement(using = "id", value = "ctl02_txtShowTopX")
 	show_top$clearElement()
 	show_top$sendKeysToElement(list(as.character(top)))
 
 	# Trun off altitude adjustment ----
-	altitude <- remDr$findElement(using = "id", value = "ctl82_cbUseAltitudeAdjTime")
+	altitude <- remDr$findElement(using = "id", value = "ctl02_cbUseAltitudeAdjTime")
 	altitude$clickElement()
 
 	# Submit report search ----
-	search <- remDr$findElement(using = "id", value = "ctl82_btnCreateReport")
+	search <- remDr$findElement(using = "id", value = "ctl02_btnCreateReport")
 	search$clickElement()
 
-	Sys.sleep(5)
+	Sys.sleep(10)
 
 	# Change The Output To CSV & Save! ----
-	output_select <- remDr$findElement(using = "id", value = "ctl82_ucReportViewer_ddViewerType")
+	output_select <- remDr$findElement(using = "id", value = "ctl02_ucReportViewer_ddViewerType")
 	output_select$sendKeysToElement(list("E", "E", "E"))
-	change_output <- remDr$findElement(using = "id", value = "ctl82_ucReportViewer_lbChangeOutputType" )
+	change_output <- remDr$findElement(using = "id", value = "ctl02_ucReportViewer_lbChangeOutputType" )
 
 	Sys.sleep(5) # Need to pause to get the export click to work
 
 	change_output$clickElement()
 
-	Sys.sleep(20) # Give Time for Down Load
+	Sys.sleep(10) # Give Time for Down Load
 	remDr$close()
 
 	# File Management ----
