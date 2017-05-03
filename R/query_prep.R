@@ -173,7 +173,10 @@ query_prep <- function(conference = NULL,
 	}
 
 	## Final Query Prep
-	prepared_query <- sub('WHERE\\s+ AND', "WHERE", prepared_query)
+	prepared_query <- gsub('WHERE\\s+AND', 
+	                       "WHERE", 
+	                       prepared_query, 
+	                       perl = TRUE)
 
 	return(prepared_query)
 }
