@@ -37,7 +37,7 @@ report_top_times <- function(con,
 								gender,
 								athlete,
 								event)
-	print(prepared_query)
+	#print(prepared_query)
 
 	# Execute Query
 	query_resutls <- DBI::dbSendQuery(con, prepared_query)
