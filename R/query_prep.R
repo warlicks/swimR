@@ -20,31 +20,37 @@ query_prep <- function(conference = NULL,
 					  event = 'All')
 {
 	# Set Up Basic Query Structure
-	top_time_query <- '
+	top_time_query <- "
 	Select
 		ATHLETE_NAME,
-		GENDER,
+		B.GENDER,
 		TEAM_NAME,
 		TEAM_CODE,
-		E.NAME As "CONFERENCE",
-		"EVENT",
+		E.NAME As \"CONFERENCE\",
+		\"EVENT\",
 		SWIM_TIME_TEXT,
-		SWIM_TIME_VALUE
+		SWIM_TIME_VALUE,
+		F.Q_TIME_VALUE AS A_CUT,
+		G.Q_TIME_VALUE AS B_CUT
 
 	FROM Result A
 		INNER JOIN ATHLETE B ON A.Athlete_ID = B.ID
 		INNER JOIN EVENT C ON A.EVENT_ID = C.ID
 		INNER JOIN TEAM D ON B.TEAM_ID = D.ID
 		INNER JOIN CONFERENCE E ON D.CONFERENCE_ID = E.ID
-
+		Inner JOIN QUALIFYING F ON C.ID = F.EVENT_ID AND B.GENDER = F.GENDER
+		INNER JOIN QUALIFYING G ON C.ID = G.EVENT_ID AND B.GENDER = G.GENDER
+		
 	WHERE
+		F.STANDARD = 'A'
+		AND G.STANDARD = 'B'
 		CONFERENCE_NAME
 		GENDER_FILLER
 		TEAM_FILLER
 		CODE_FILLER
 		ATHELTE_FILLER
 		EVENT_FILLER
-	'
+	"
 
 	# Update query based on arguments
 
@@ -52,7 +58,7 @@ query_prep <- function(conference = NULL,
 	if(is.null(conference)){
 		prepared_query <- sub('CONFERENCE_NAME', "", top_time_query)
 	} else {
-		conf_string <- paste("E.NAME IN ('",
+		conf_string <- paste("And E.NAME IN ('",
 							 paste(conference, collapse = "', '"),
 							 "')",
 							sep = "")
@@ -99,7 +105,7 @@ query_prep <- function(conference = NULL,
 		prepared_query <- sub('CODE_FILLER', team_string2, prepared_query)
 	}
 
-	## athlete Swimmers
+	## Athlete Argument
 	if(is.null(athlete)){
 		prepared_query <- sub('ATHELTE_FILLER', "", prepared_query)
 
@@ -115,8 +121,8 @@ query_prep <- function(conference = NULL,
 						athlete,
 						ignore.case = TRUE) == FALSE
 					)
-		print(names)
-		print(id)
+		#print(names) # Debugging
+		#print(id) # Debugging
 
 		### Prepare Where Clasue
 		if(length(names) >= 1 & length(id) >= 1){
@@ -175,6 +181,10 @@ query_prep <- function(conference = NULL,
 	## Final Query Prep
 	prepared_query <- gsub('WHERE\\s+AND', 
 	                       "WHERE", 
+	                       prepared_query, 
+	                       perl = TRUE)
+	
+	prepared_query <- gsub('WHERE\\s+$', "", 
 	                       prepared_query, 
 	                       perl = TRUE)
 
