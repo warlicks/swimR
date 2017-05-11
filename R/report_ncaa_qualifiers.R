@@ -45,10 +45,9 @@ report_ncaa_qualifiers <- function(con,
 	# Filter to just NCAA qualifiers
 	ncaa_qualifers <- dplyr::filter(top_times_df, SWIM_TIME_VALUE <= B_CUT)
 	ncaa_qualifers <- dplyr::mutate(ncaa_qualifers, 
-	                                STANDARD = case_when(
-	                                		"SWIM_TIME_VALUE" <= "A_CUT" ~ 'A',
-	                                		"SWIM_TIME_VALUE" > "A_CUT" ~ 'B'
-	                                			)
+	                                STANDARD = ifelse(SWIM_TIME_VALUE <= A_CUT,
+	                                                  'A',
+	                                                  'B')	
 									)
 
 	# Set Up Group By
@@ -66,5 +65,7 @@ report_ncaa_qualifiers <- function(con,
 
 	ncaa_qualifers <- dplyr::group_by_(ncaa_qualifers, 
 	                                   .dots = aggregate_groups)
-	ncaa_qualifers <- dplyr::summarise(ncaa_qualifers, n())
+	ncaa_qualifers <- dplyr::summarise(ncaa_qualifers, n_distinct(ATHLETE_NAME))
+
+	return(ncaa_qualifers)
 }
