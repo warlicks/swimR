@@ -1,8 +1,12 @@
-#' Query Database for Event Rankings
+#' Determine the number NCAA Swimming Championship qualifiers
 #'
-#' Extract Top Times
+#' Determine the number NCAA Swimming Championship qualifiers
 #'
 #' \code{report_top_times} queries a SQL database to produce a ranking of swimmers in the specified events.  The function is flexiable and can rank swimmers across all of Division 1, within a specific conference or within a team.  It can also produce an individual swimmer's best result in each event they have competed in.
+#' 
+#' When producing the count the function aggregates along the specified
+#' arguments.  If left at the defult the argument is not included in the
+#' aggregate grouping.  
 #'
 #' @importFrom magrittr %>%
 #'
@@ -12,30 +16,25 @@
 #' @param gender a character vector.  Indicates the output should include men, women or both.  Defaults to "Both".  Other options are "M" for men and "F" for women.
 #' @param athlete a character vector with the name or athlete id of a swimmier.  If not provided the results include all swimmers.  The athlete id follows the USA Swimming standard.
 #' @param event a character vector with the name of swimming envent.  If not provided the results include all events.
-#' @param top an integer indicating how many results to return per event  When 
-#' queryin for an individual swimmer it only returns 1 result regardless of 
-#' the value provided .
 #'
-#' @return a data frame of ranked swimming results.
+#'
+#' @return a data frame providing a count of ncaa qualifiers aggregated 
+#' according to the arguments provided.  
 #'
 #' @export
 
-
-report_top_times <- function(con,
+report_ncaa_qualifiers <- function(con,
 							conference = 'All',
 							team_name = 'All',
 							gender = 'Both',
 							athlete = NULL,
-							event = 'All',
-							top = 3){
-	# Prepare Query
+							event = 'All'){
+
 	prepared_query <- best_time_query(conference,
 								team_name,
 								gender,
 								athlete,
 								event)
-	#print(prepared_query)
-
 	# Execute Query
 	query_resutls <- DBI::dbSendQuery(con, prepared_query)
 
@@ -43,41 +42,29 @@ report_top_times <- function(con,
 	top_times_df <- DBI::dbFetch(query_resutls)
 	DBI::dbClearResult(query_resutls)
 
-	## Prepare Group By
-	aggregate_groups <- c('EVENT_NAME')
+	# Filter to just NCAA qualifiers
+	ncaa_qualifers <- dplyr::filter(top_times_df, SWIM_TIME_VALUE <= B_CUT)
+	ncaa_qualifers <- dplyr::mutate(ncaa_qualifers, 
+	                                STANDARD = case_when(
+	                                		"SWIM_TIME_VALUE" <= "A_CUT" ~ 'A',
+	                                		"SWIM_TIME_VALUE" > "A_CUT" ~ 'B'
+	                                			)
+									)
 
-
+	# Set Up Group By
+	aggregate_groups <- c('GENDER', 'STANDARD')
 	if(conference != 'All'){
 		aggregate_groups <- append(aggregate_groups, 'CONFERENCE_NAME')
 	}
 	if(team_name != 'ALL'){
 		aggregate_groups <- append(aggregate_groups, 'TEAM_NAME')
 	}
-	if(gender == 'Both'){
-		aggregate_groups <- append(aggregate_groups, 'GENDER')
-	}
-	if(!is.null(athlete)){
-		aggregate_groups <- append(aggregate_groups, 'ATHLETE_NAME')
-	}
 
-	# # Select each athletes top time if we only want 1 entry per athlete.
-	# if(multiple_results == FALSE){
-	# 	#top_times_df <- top_times_df %>%
-	# 	top_times_df <- dplyr::group_by(top_times_df, ATHLETE_NAME, EVENT)
-	# 	top_times_df <- dplyr::mutate(top_times_df,
-	# 						ATHLETE_RANK = dense_rank(SWIM_TIME_VALUE)
-	# 					)
-	# 	top_times_df <- dplyr::filter(top_times_df, ATHLETE_RANK == 1)
-	# 	top_times_df <- dplyr::ungroup(top_times_df)
-	# }
+	if(event != 'All'){
+		aggregate_groups <- append(aggregate_groups, 'EVENT_NAME')
+	} 
 
-	#top_times_df <- top_times_df %>%
-	top_times_df <- dplyr::group_by_(top_times_df, .dots = aggregate_groups)
-	top_times_df <- dplyr::mutate(top_times_df,
-						RANK = dense_rank(SWIM_TIME_VALUE)
-					)
-	top_times_df <- dplyr::filter(top_times_df, RANK <= top)
-
-
-	return(top_times_df)
+	ncaa_qualifers <- dplyr::group_by_(ncaa_qualifers, 
+	                                   .dots = aggregate_groups)
+	ncaa_qualifers <- dplyr::summarise(ncaa_qualifers, n())
 }
