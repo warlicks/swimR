@@ -20,7 +20,7 @@ event_depth <- function(con, team_name, gender = 'Both'){
     # Define Basic SQL Query
     event_depth_query <- "
     Select Distinct
-        "EVENT",
+        \"EVENT\",
         GENDER,
         Count(Distinct ATHLETE_ID) AS ATHLETE_COUNT
 
@@ -34,11 +34,15 @@ event_depth <- function(con, team_name, gender = 'Both'){
         GENDER_FILLER
 
     Group By
-        GENDER,
-        \"EVENT\"
+        \"EVENT\",
+        GENDER
     "
     # Update Query Based on arguments in function call
-    prepared_query <- sub("TEAM_FILLER", team_name, event_depth_query)
+    team_string <- paste("TEAM_NAME IN ('",
+                         paste(team_name, collapse = "', '"),
+                         "')",
+                         sep = "")
+    prepared_query <- sub("TEAM_FILLER", team_string, event_depth_query)
 
     if(gender == 'Both'){
         prepared_query <- sub('GENDER_FILLER', "", prepared_query)
@@ -85,7 +89,7 @@ distance_depth <- function(con, team_name, gender = 'Both'){
     distance_depth_query <- "
     Select DISTINCT
     	GENDER,
-        SUBSTR(\"EVENT\", 1, (INSTR(\"EVENT\", \" \"))) As DISTANCE,
+        Trim(SUBSTR(\"EVENT\", 1, (INSTR(\"EVENT\", \" \")))) As DISTANCE,
         Count(Distinct ATHLETE_ID)
 
     From Event E
@@ -103,7 +107,12 @@ distance_depth <- function(con, team_name, gender = 'Both'){
     "
 
     # Update Query Based on arguments in function call
-    prepared_query <- sub("TEAM_FILLER", team_name, distance_depth_query)
+    team_string <- paste("TEAM_NAME IN ('",
+                         paste(team_name, collapse = "', '"),
+                         "')",
+                         sep = "")
+
+    prepared_query <- sub("TEAM_FILLER", team_string, distance_depth_query)
 
     if(gender == 'Both'){
         prepared_query <- sub('GENDER_FILLER', "", prepared_query)
