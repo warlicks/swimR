@@ -17,4 +17,3 @@ Insert Athlete Data into database.
 An Internal function.
 }
 \keyword{internal}
-

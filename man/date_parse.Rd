@@ -22,4 +22,3 @@ a list.  Each character from the start date is an element of the list.
 \code{\link[RSelenium]{remoteDriver}} \code{\link{individual_swims}}
 }
 \keyword{internal}
-

@@ -51,4 +51,3 @@ report <- individual_swims('Big Ten', start_date = '2015-09-01', end_date = '201
 \seealso{
 \code{\link[RSelenium]{RSelenium}}
 }
-

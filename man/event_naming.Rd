@@ -13,4 +13,3 @@ event_naming(data)
 An Internal Function used in \code{\link{data_clean}}
 }
 \keyword{internal}
-

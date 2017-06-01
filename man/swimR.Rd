@@ -13,4 +13,3 @@ The package facilitates automated data collection of college swimming results by
 
 Overtime we hope to expand the capabilities of the package.
 }
-

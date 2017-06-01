@@ -28,4 +28,3 @@ In the top time report downloaded by \code{\link{individual_swims}}, the athlete
 
 Since we typically want to work an athletes time, we need to convert swim time to a numeric format.  In \code{clean_swim} a new column \strong{swim_time2} is created to store converted time.  The athlete's time is repersented in seconds.
 }
-

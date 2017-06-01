@@ -17,4 +17,3 @@ Insert Result Data into database.
 An Internal function.
 }
 \keyword{internal}
-

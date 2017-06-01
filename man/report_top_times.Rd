@@ -33,4 +33,3 @@ Extract Top Times
 \details{
 \code{report_top_times} queries a SQL database to produce a ranking of swimmers in the specified events.  The function is flexiable and can rank swimmers across all of Division 1, within a specific conference or within a team.  It can also produce an individual swimmer's best result in each event they have competed in.
 }
-

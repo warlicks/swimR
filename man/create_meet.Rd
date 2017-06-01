@@ -14,4 +14,3 @@ DBIConnection-class}}
 Code to create each table in the database.
 }
 \keyword{internal}
-

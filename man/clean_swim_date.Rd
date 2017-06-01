@@ -13,4 +13,3 @@ clean_swim_date(x)
 Clean up dates
 }
 \keyword{internal}
-

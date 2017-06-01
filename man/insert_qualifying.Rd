@@ -17,4 +17,3 @@ Insert Event Data into database.
 An Internal function.
 }
 \keyword{internal}
-

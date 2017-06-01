@@ -12,7 +12,8 @@ report_ncaa_qualifiers(con, conference = "All", team_name = "All",
 
 \item{conference}{a character vector with the name of an NCAA swimming conference.  If not provided the output include all conferences.}
 
-\item{team_name}{A character vector with the name of an NCAA swimming conference.  If not provided the output include all teams.}
+\item{team_name}{A character vector with the name of an NCAA swimming team.
+If not provided the output include all teams.}
 
 \item{gender}{a character vector.  Indicates the output should include men, women or both.  Defaults to "Both".  Other options are "M" for men and "F" for women.}
 
@@ -21,7 +22,7 @@ report_ncaa_qualifiers(con, conference = "All", team_name = "All",
 \item{event}{a character vector with the name of swimming envent.  If not provided the results include all events.}
 }
 \value{
-a data frame providing a count of ncaa qualifiers aggregated 
+a data frame providing a count of ncaa qualifiers aggregated
 according to the arguments provided.
 }
 \description{
@@ -34,4 +35,3 @@ When producing the count the function aggregates along the specified
 arguments.  If left at the defult the argument is not included in the
 aggregate grouping.
 }
-

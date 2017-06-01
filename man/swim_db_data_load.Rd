@@ -21,4 +21,3 @@ Load college swimming results into a database.
 
 The function is set up so only distinct data is stored.  If a the function encounters a duplicate record it skips the records and moves on to the next record.
 }
-

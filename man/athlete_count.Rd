@@ -17,4 +17,3 @@ a data frame with the count on athletes by gender
 \description{
 Get a count of athletes by team.
 }
-

@@ -24,4 +24,3 @@ query_prep(conference = NULL, team_name = NULL, team_code = NULL,
 The function prepares a SQL query based on the parameters provided.
 }
 \keyword{internal}
-

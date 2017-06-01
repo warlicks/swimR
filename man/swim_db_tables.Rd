@@ -20,4 +20,3 @@ Create tables to store data in swimming database.
 
 If the database provided in /emph{db_name} does not exist the fuction will create the SQLite database.
 }
-

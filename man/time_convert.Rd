@@ -22,4 +22,3 @@ An internal function used in \code{\link{data_clean}}
 \code{\link[lubridate]{duration}}
 }
 \keyword{internal}
-

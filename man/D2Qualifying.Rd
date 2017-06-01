@@ -27,4 +27,3 @@ Swimming Championships.
 \code{\link{D1Qualifying}} \code{\link{D3Qualifying}}
 }
 \keyword{datasets}
-

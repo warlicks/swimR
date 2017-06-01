@@ -17,4 +17,3 @@ Insert Meet Data into database.
 An Internal function.
 }
 \keyword{internal}
-

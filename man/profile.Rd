@@ -19,4 +19,3 @@ Profile is an internal function used by \code{\link{individual_swims}}.  It prep
 \code{\link{individual_swims}} \code{\link[RSelenium]{makeFirefoxProfile}}
 }
 \keyword{internal}
-
