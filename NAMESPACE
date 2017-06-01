@@ -2,6 +2,8 @@
 
 export(athlete_count)
 export(clean_swim)
+export(distance_depth)
+export(event_depth)
 export(get_conferences)
 export(individual_swims)
 export(report_ncaa_qualifiers)
